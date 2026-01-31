@@ -23,6 +23,7 @@ import { deliveryPartnerValidation } from "@/validations/delivery-partner/delive
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
 import { Eye, EyeOff, Lock, Mail, TruckIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -32,6 +33,7 @@ type FormData = z.infer<typeof deliveryPartnerValidation>;
 
 export function DeliveryPartnerForm() {
     const { t } = useTranslation();
+    const router = useRouter();
     const [showPassword, setShowPassword] = useState(false);
     const form = useForm<FormData>({
         resolver: zodResolver(deliveryPartnerValidation),
@@ -45,18 +47,21 @@ export function DeliveryPartnerForm() {
         const toastId = toast.loading("Creating Delivery Partner...");
 
         try {
-            const result = await createDeliveryPartner(data as FormData);
+            // const result = await createDeliveryPartner(data as FormData);
 
-            if (result.success) {
-                toast.success("Delivery Partner created successfully!", {
-                    id: toastId,
-                });
-                form.reset();
+            // if (result.success) {
+            //     toast.success("Delivery Partner created successfully!", {
+            //         id: toastId,
+            //     });
+            //     form.reset();
 
-                // onSuccess(result?.data?.email || "");
-            } else {
-                toast.error(result?.message, { id: toastId })
-            }
+            //     router.push(`/verify-otp?email=mdmorshed0187@gmail.com`);
+            //     // router.push(`/verify-otp?email=${result?.data?.email}`);
+            //     // onSuccess(result?.data?.email || "");
+            // } else {
+            //     toast.error(result?.message, { id: toastId })
+            // }
+            router.push(`/verify-otp?email=mdmorshed0187@gmail.com`);
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
             toast.error(
