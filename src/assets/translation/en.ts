@@ -116,6 +116,11 @@ export const en = {
     // switcher tabs
     driver_registration_form: "Driver Registration Form",
     status_check: "Status Check",
+    // -> notes
+    note: "Note",
+    you_man_register_using_rider_form: "You may register using this rider registration form.",
+    if_fleet_manager_available: "If a Fleet Manager is available in your area, you will be added under that Fleet Manager.",
+    if_fleet_manager_is_not_available: "If there is no Fleet Manager in your area, you will be able to work as freelancer under Deligo for product delivery.",
 
     // status-check
     check_account_status: "Check Account Status",

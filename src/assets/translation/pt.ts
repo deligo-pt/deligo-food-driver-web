@@ -117,6 +117,10 @@ export const pt = {
     // switcher tabs
     driver_registration_form: "Formulário de cadastro de motorista",
     status_check: "Verificação de status",
+    note: "Nota",
+    you_man_register_using_rider_form: "Você pode se cadastrar usando este formulário de registro de entregador.",
+    if_fleet_manager_available: "Se houver um Gerente de Frota disponível em sua região, você será adicionado sob a gestão desse Gerente de Frota.",
+    if_fleet_manager_is_not_available: "Se não houver um Gerente de Frota em sua região, você poderá trabalhar como freelancer pela Deligo para a entrega de produtos.",
 
     // status-check
     check_account_status: "Verificar status da conta",

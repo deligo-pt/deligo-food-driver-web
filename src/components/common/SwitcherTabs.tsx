@@ -3,6 +3,7 @@
 import { useTranslation } from "@/hooks/use-translation";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { motion } from 'framer-motion';
 
 const SwitcherTabs = () => {
     const { t } = useTranslation();
@@ -19,21 +20,48 @@ const SwitcherTabs = () => {
     ];
 
     return (
-        <div className="bg-primary/10 p-5 flex flex-row items-center justify-center gap-5 w-[70%] mx-auto rounded-lg">
-            {
-                links.map(link => {
-                    const isActive = pathname === link.href;
+        <div className="w-[70%] mx-auto ">
+            <div className="bg-primary/10 p-5 flex flex-col lg:flex-row items-center justify-center gap-5 rounded-lg w-full">
+                {
+                    links.map(link => {
+                        const isActive = pathname === link.href;
 
-                    return (
-                        <Link key={link.href} href={link.href}
-                            className={isActive ? "text-primary font-semibold border-b border-primary/50 rounded-lg p-2 w-full text-center" : "text-secondary p-2 font-semibold w-full text-center"}
-                        >
-                            {link.label}
-                        </Link>
-                    )
-                })
-            }
-
+                        return (
+                            <Link key={link.href} href={link.href}
+                                className={isActive ? "text-primary font-semibold border-b border-primary/50 rounded-lg p-2 w-full text-center" : "text-secondary p-2 font-semibold w-full text-center"}
+                            >
+                                {link.label}
+                            </Link>
+                        )
+                    })
+                }
+            </div>
+            {pathname === "/driver-register" && (
+                <motion.div
+                    initial={{
+                        opacity: 0,
+                        y: 20,
+                    }}
+                    animate={{
+                        opacity: 1,
+                        y: 0,
+                    }}
+                    transition={{
+                        duration: 0.5,
+                    }}
+                    className="bg-primary/10 p-5 rounded-lg w-full text-primary italic mt-3">
+                    <h2 className="text-lg font-semibold">{t("note")} : </h2>
+                    <p className="text-sm">
+                        - {t("you_man_register_using_rider_form")}
+                    </p>
+                    <p className="text-sm">
+                        - {t("if_fleet_manager_available")}
+                    </p>
+                    <p className="text-sm">
+                        - {t("if_fleet_manager_is_not_available")}
+                    </p>
+                </motion.div>
+            )}
         </div>
     );
 };
