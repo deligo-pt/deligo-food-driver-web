@@ -7,9 +7,9 @@ import 'react-international-phone/style.css';
 import SwitcherTabs from "@/components/common/SwitcherTabs";
 
 export const metadata: Metadata = {
-  title: "DeliGo Fleet Manager Portal | Manage Drivers & Operations",
+  title: "DeliGo Rider Registration Form | Check Status",
   description:
-    "DeliGo Fleet Manager Portal enables delivery fleet partners to manage Drivers,  track performance, monitor payouts, and streamline delivery operations from a powerful dashboard.",
+    "DeliGo Rider Registration Form enables one to register as a Delivery Partner if there is no Fleet Manager in his area.",
 };
 
 export default function RootLayout({
