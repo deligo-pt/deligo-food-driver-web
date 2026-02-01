@@ -1,0 +1,173 @@
+export const pt = {
+    // add delivery partner -> delivery partner form
+    delivery_partner_registration: "Registo de parceiro de entrega",
+    join_our_delivery_network: "Junte-se hoje à nossa rede de entregas",
+    password: "Palavra-passe",
+    register_partner: "Registar parceiro",
+
+    // -> delivery otp form
+    verify_delivery_partner_email: "Verificar email do parceiro de entrega",
+    update: "Atualizar",
+    delivery_partner: "Parceiro de entrega",
+    details: "Detalhes",
+    complete_the_form_below: "Preencha o formulário abaixo para que possa entregar com o serviço de entregas preferido de Portugal",
+    step: "Passo",
+    previous: "Anterior",
+    personal_information: "Informação pessoal",
+    legal_status: "Estado legal",
+    payment_details: "Detalhes de pagamento",
+    vehicle_information: "Informação do veículo",
+    background_check: "Verificação de antecedentes",
+    equipment_availability: "Equipamento e disponibilidade",
+    please_provide_partner_details: "Forneça os dados pessoais do parceiro para verificação de identidade",
+    first_name: "Nome",
+    last_name: "Apelido",
+    phone_number: "Número de telefone",
+    date_of_birth: "Data de nascimento",
+    gender: "Género",
+    male: "Masculino",
+    female: "Feminino",
+    other: "Outro",
+    nationality: "Nacionalidade",
+    id_expiry_date: "Data de validade do documento",
+    nif_number: "Número de NIF",
+    citizen_card: "Número do Cartão de Cidadão",
+    passport_number: "Número do passaporte",
+    street: "Rua",
+    postal_code: "Código postal",
+    state: "Distrito",
+    continue_to_legal_status: "Continuar para estado legal",
+
+    // -> legal status form
+    right_to_work: "Direito a trabalhar",
+    please_provide_details_partner: "Forneça informações sobre o estado legal do parceiro",
+    residence_permit_type: "Tipo de autorização de residência",
+    arc_number: "Número do ARC / Título de residência",
+    expiration_date: "Data de validade",
+    continue_to_payment_details: "Continuar para detalhes de pagamento",
+
+    // -> payment details
+    payment_banking_details: "Detalhes de pagamento e bancários",
+    please_provide_partner_banking: "Forneça as informações bancárias do parceiro para pagamentos",
+    swift: "SWIFT",
+    this_payment_information_is_secure: "Estas informações de pagamento são seguras e usadas apenas para processar os ganhos. O nome do titular da conta deve corresponder ao documento do parceiro.",
+    continue_to_vehicle_information: "Continuar para informação do veículo",
+
+    // -> vehicle information
+    please_provide_details_about: "Forneça detalhes sobre o veículo que será usado para entregas",
+    vehicle_type: "Tipo de veículo",
+    bicycle: "Bicicleta",
+    e_bike: "Bicicleta elétrica",
+    scooter: "Scooter",
+    motorbike: "Motociclo",
+    car: "Carro",
+    brand: "Marca",
+    model: "Modelo",
+    license_plate: "Matrícula",
+    driving_license_number: "Número da carta de condução",
+    driving_license_expiry: "Validade da carta de condução",
+    insurance_policy_number: "Número da apólice de seguro",
+    insurance_expiry: "Validade do seguro",
+    continue_to_background_check: "Continuar para verificação de antecedentes",
+
+    // -> background_check
+    criminal_background_check: "Verificação de antecedentes criminais",
+    provide_delivery_partner_criminal: "Forneça o Certificado de Registo Criminal do parceiro",
+    background_check_requirement: "Requisito de verificação",
+    portugal_food_delivery: "Em Portugal, plataformas de entrega de comida exigem um Certificado de Registo Criminal com menos de 3 meses, obtido em:",
+    online_at: "Online em",
+    justica_gov: "justica.gov.pt",
+    civil_registry: "Conservatórias do Registo Civil",
+    citizen_shops: "Lojas do Cidadão",
+    have_criminal_record_certificate: "Possui Certificado de Registo Criminal",
+    criminal_record_certificate: "Certificado de Registo Criminal",
+    certificate_issue_date: "Data de emissão do certificado",
+    continue_to_equipment: "Continuar para equipamento e disponibilidade",
+
+    // -> equipment & availability
+    tell_us_about_equipment: "Informe-nos sobre o seu equipamento e disponibilidade",
+    preferred_working_zones: "Zonas de trabalho preferidas",
+    preferred_working_hours: "Horário de trabalho preferido",
+    morning_8_12: "Manhã (08h–12h)",
+    afternoon_12_6: "Tarde (12h–18h)",
+    evening_6_10: "Noite (18h–22h)",
+    night_10_12: "Madrugada (22h–00h)",
+    full_day: "Dia inteiro",
+    flexible: "Flexível",
+    delivery_equipment: "Equipamento de entrega?",
+    isothermal_bag: "Mala térmica",
+    helmet: "Capacete",
+    power_bank: "Power bank",
+    worked_with_other_delivery_platform: "Trabalhou com outras plataformas de entrega?",
+    yes: "Sim",
+    other_platform_name: "Nome da outra plataforma",
+    continue_to_documents: "Continuar para documentos",
+
+    // -> upload documents
+    upload_your_documents: "Carregar os seus documentos",
+    id_proof_front: "Documento de identificação (frente)",
+    id_proof_back: "Documento de identificação (verso)",
+    driving_license_front: "Carta de condução (frente)",
+    driving_license_back: "Carta de condução (verso)",
+    vehicle_registration: "Documento do veículo",
+    criminal_record_certification: "Certificado de Registo Criminal",
+    select_file: "Selecionar ficheiro",
+    complete_submit: "Concluir e submeter",
+
+    // switcher tabs
+    driver_registration_form: "Formulário de cadastro de motorista",
+    status_check: "Verificação de status",
+    note: "Nota",
+    you_man_register_using_rider_form: "Você pode se cadastrar usando este formulário de registro de entregador.",
+    if_fleet_manager_available: "Se houver um Gerente de Frota disponível em sua região, você será adicionado sob a gestão desse Gerente de Frota.",
+    if_fleet_manager_is_not_available: "Se não houver um Gerente de Frota em sua região, você poderá trabalhar como freelancer pela Deligo para a entrega de produtos.",
+
+    // status-check
+    check_account_status: "Verificar status da conta",
+    give_credentials_check_status: "Forneça suas credenciais para verificar o status da sua conta",
+    check_status: "Verificar status",
+    registration_pending: "Registo Pendente",
+    registration_completed: "Registo Concluído",
+    registration_approved: "Registo Aprovado",
+    registration_rejected: "Registo Rejeitado",
+
+    you_didnot_submit:
+        "Não submeteu os dados de registo. Por favor, tente novamente.",
+    you_submitted:
+        "Parabéns! Submeteu com sucesso os seus dados de registo.",
+    submission_approved:
+        "Parabéns! O seu registo foi aprovado. Já pode aceder ao painel.",
+    submission_rejected:
+        "Lamentamos! O seu registo foi rejeitado.",
+
+    submissionInProgress: "Submissão em Curso",
+    submissionProgressDesc:
+        "Ainda não submeteu os seus dados de registo. Para concluir o processo, clique no botão abaixo.",
+
+    reviewInProgress: "Em Análise",
+    reviewInProgressDesc:
+        "A nossa equipa administrativa está a analisar as suas informações. Receberá uma atualização dentro de",
+    hours24_48: "24–48 horas",
+    reviewInProgressDesc2:
+        "após a conclusão do processo de verificação.",
+
+    nextStep: "Próximo Passo — Verificação",
+    nextStepDesc:
+        "Assim que os seus dados forem verificados, tornar-se-á um",
+    verifiedPartner: "Parceiro Verificado",
+    nextStepDesc2:
+        "e terá acesso ao painel, gestão de loja e pagamentos.",
+
+    approvedByAdmin: "Aprovado pelo Administrador",
+    rejectedByAdmin: "Rejeitado pelo Administrador",
+
+    check_again: "Verificar novamente",
+    applicationStatus:
+        "Pode verificar o estado da sua candidatura aqui a qualquer momento.",
+    applicationApproved:
+        "Aguarde a aprovação da sua candidatura.",
+    loginAgainDesc:
+        "Para aceder ao seu painel, precisa de iniciar sessão novamente.",
+    applicationTryAgain:
+        "A sua candidatura foi rejeitada. Pode tentar novamente.",
+}
