@@ -114,7 +114,14 @@ export const pt = {
     select_file: "Selecionar ficheiro",
     complete_submit: "Concluir e submeter",
 
+    // switcher tabs
+    driver_registration_form: "Formulário de cadastro de motorista",
+    status_check: "Verificação de status",
+
     // status-check
+    check_account_status: "Verificar status da conta",
+    give_credentials_check_status: "Forneça suas credenciais para verificar o status da sua conta",
+    check_status: "Verificar status",
     registration_pending: "Registo Pendente",
     registration_completed: "Registo Concluído",
     registration_approved: "Registo Aprovado",

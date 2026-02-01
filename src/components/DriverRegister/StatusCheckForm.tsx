@@ -137,10 +137,10 @@ export function StatusCheckForm() {
                                 </motion.div>
                             </div>
                             <CardTitle className="text-center text-[#DC3173]">
-                                Check Account Status
+                                {t("check_account_status")}
                             </CardTitle>
                             <CardDescription className="text-center">
-                                Give your credentials to check your account status
+                                {t("give_credentials_check_status")}
                             </CardDescription>
                         </CardHeader>
                         <CardContent>
@@ -222,7 +222,7 @@ export function StatusCheckForm() {
                                     type="submit"
                                     className="bg-[#DC3173] hover:bg-[#DC3173]/90"
                                 >
-                                    Check Status
+                                    {t("check_status")}
                                 </Button>
                             </motion.div>
                         </CardFooter>

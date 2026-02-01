@@ -113,7 +113,14 @@ export const en = {
     select_file: "Select file",
     complete_submit: "Complete & Submit",
 
+    // switcher tabs
+    driver_registration_form: "Driver Registration Form",
+    status_check: "Status Check",
+
     // status-check
+    check_account_status: "Check Account Status",
+    give_credentials_check_status: "Give your credentials to check your account status",
+    check_status: "Check Status",
     registration_pending: "Registration Pending",
     registration_completed: "Registration Completed",
     registration_approved: "Registration Approved",

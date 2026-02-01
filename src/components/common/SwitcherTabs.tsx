@@ -1,18 +1,20 @@
 'use client';
 
+import { useTranslation } from "@/hooks/use-translation";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const SwitcherTabs = () => {
+    const { t } = useTranslation();
     const pathname = usePathname();
     const links = [
         {
             href: "/driver-register",
-            label: "Driver Registration Form",
+            label: t("driver_registration_form"),
         },
         {
             href: "/status-check",
-            label: "Status Check"
+            label: t("status_check"),
         }
     ];
 
