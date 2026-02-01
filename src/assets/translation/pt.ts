@@ -34,8 +34,10 @@ export const pt = {
     citizen_card: "Número do Cartão de Cidadão",
     passport_number: "Número do passaporte",
     street: "Rua",
+    city: "Cidade",
     postal_code: "Código postal",
     state: "Distrito",
+    country: "País",
     continue_to_legal_status: "Continuar para estado legal",
 
     // -> legal status form
@@ -170,4 +172,15 @@ export const pt = {
         "Para aceder ao seu painel, precisa de iniciar sessão novamente.",
     applicationTryAgain:
         "A sua candidatura foi rejeitada. Pode tentar novamente.",
+
+    // others
+    otp4DigitCode:
+        "Introduza o código de 4 dígitos enviado para o seu email",
+    bankName: "Nome do Banco",
+    accountHolder: "Titular da Conta",
+    iban: "IBAN",
+    swift_bic: "SWIFT / BIC",
+    viewCTA: "Ver",
+    removeCTA: "Remover",
+    noFileSelected: "Nenhum ficheiro selecionado",
 }

@@ -4,6 +4,7 @@ import { useTranslation } from "@/hooks/use-translation";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from 'framer-motion';
+import { Button } from "../ui/button";
 
 const SwitcherTabs = () => {
     const { t } = useTranslation();
@@ -18,10 +19,11 @@ const SwitcherTabs = () => {
             label: t("status_check"),
         }
     ];
+    const go_back_action = pathname === '/driver-register' || pathname === '/verify-otp' || pathname === '/status-check';
 
     return (
         <div className="lg:w-[70%] mx-auto ">
-            <div className="bg-primary/10 p-5 flex flex-col md:flex-row items-center justify-center gap-5 rounded-lg w-full">
+            {go_back_action && <div className="bg-primary/10 p-5 flex flex-col md:flex-row items-center justify-center gap-5 rounded-lg w-full">
                 {
                     links.map(link => {
                         const isActive = pathname === link.href;
@@ -35,7 +37,7 @@ const SwitcherTabs = () => {
                         )
                     })
                 }
-            </div>
+            </div>}
             {pathname === "/driver-register" && (
                 <motion.div
                     initial={{
@@ -62,6 +64,17 @@ const SwitcherTabs = () => {
                     </p>
                 </motion.div>
             )}
+            {
+                !go_back_action && (
+                    <div className="bg-primary/10 p-5 flex flex-col md:flex-row items-center justify-start gap-5 rounded-lg w-full font-semibold">
+                        <Button variant="default">
+                            <Link href="/driver-register">
+                                Go to Home
+                            </Link>
+                        </Button>
+                    </div>
+                )
+            }
         </div>
     );
 };
