@@ -33,8 +33,10 @@ export const en = {
     citizen_card: "Citizen Card Number",
     passport_number: "Passport Number",
     street: "Street",
+    city: "City",
     postal_code: "Postal Code",
     state: "State",
+    country: "Country",
     continue_to_legal_status: "Continue to Legal Status",
     // -> legal status form
     right_to_work: "Right to Work",
@@ -132,7 +134,7 @@ export const en = {
     registration_rejected: "Registration Rejected",
     you_didnot_submit: "You did not submit your registration details. Please try again.",
     you_submitted: "Congratulations! You’ve successfully submitted your registration details.",
-    submission_approved: "Congratulations! Your registration has been approved. You can now visit your dashboard.",
+    submission_approved: "Congratulations! Your registration has been approved. You can now visit your app.",
     submission_rejected: "Sorry! Your registration has been rejected.",
     submissionInProgress: "Submission in Progress",
     submissionProgressDesc: "You did not submit your registration details. To complete the registration process, please click the button below.",
@@ -151,4 +153,14 @@ export const en = {
     applicationApproved: "Wait for your application to be approved.",
     loginAgainDesc: "To get access to your dashboard you need to login again.",
     applicationTryAgain: 'Your application has been rejected. You can try again.',
+
+    // others
+    otp4DigitCode: "Enter the 4-digit code sent to your email",
+    bankName: "Bank Name",
+    accountHolder: "Account Holder",
+    iban: "IBAN",
+    swift_bic: "SWIFT / BIC",
+    viewCTA: "View",
+    removeCTA: "Remove",
+    noFileSelected: "No file selected",
 }
