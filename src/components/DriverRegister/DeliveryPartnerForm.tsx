@@ -47,21 +47,23 @@ export function DeliveryPartnerForm() {
         const toastId = toast.loading("Creating Delivery Partner...");
 
         try {
-            // const result = await createDeliveryPartner(data as FormData);
+            const result = await createDeliveryPartner(data as FormData);
+            console.log("form result", result);
+            if (result.success) {
+                toast.success(result?.message, {
+                    id: toastId,
+                });
+                form.reset();
 
-            // if (result.success) {
-            //     toast.success("Delivery Partner created successfully!", {
-            //         id: toastId,
-            //     });
-            //     form.reset();
-
-            //     router.push(`/verify-otp?email=mdmorshed0187@gmail.com`);
-            //     // router.push(`/verify-otp?email=${result?.data?.email}`);
-            //     // onSuccess(result?.data?.email || "");
-            // } else {
-            //     toast.error(result?.message, { id: toastId })
-            // }
-            router.push(`/verify-otp?email=mdmorshed0187@gmail.com`);
+                // router.push(`/verify-otp?email=mdmorshed0187@gmail.com`);
+                router.push(`/verify-otp?email=${result?.data?.email}`);
+            } else if (result?.err?.statusCode === 409) {
+                toast.error(result?.message, { id: toastId })
+                router.push('/status-check')
+            }
+            else {
+                toast.error(result?.message, { id: toastId })
+            }
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
             toast.error(

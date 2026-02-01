@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Toaster } from "sonner";
 import Navbar from "@/components/common/Navbar";
+import 'react-international-phone/style.css';
 import SwitcherTabs from "@/components/common/SwitcherTabs";
 
 export const metadata: Metadata = {
@@ -19,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`antialiased bg-gray-50`}>
-        <div className="w-[90%] lg:w-4xl mx-auto space-y-3 my-16">
+        <div className="w-[90%] lg:w-7xl mx-auto space-y-3 my-16">
           <Navbar />
           <SwitcherTabs />
           <div className="min-h-screen">{children}</div>

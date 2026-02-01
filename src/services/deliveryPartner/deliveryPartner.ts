@@ -22,7 +22,21 @@ export const getDeliveryPartnerDetails = async (id?: string) => {
 };
 
 export const createDeliveryPartner = async (payload: any) => {
-  const res = await serverFetch.post("/auth/register/onboard/delivery-partner", {
+  const res = await serverFetch.post("/auth/register/create-delivery-partner", {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload)
+  });
+
+  const result = await res.json();
+
+  return result;
+};
+
+export const updatePartnerInformation = async (id: string, payload: any) => {
+
+  const res = await serverFetch.patch(`/delivery-partners/${id}`, {
     headers: {
       "Content-Type": "application/json",
     },

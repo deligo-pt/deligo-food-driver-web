@@ -10,7 +10,7 @@ const VerifyOtpPage = async ({ searchParams }: IProps) => {
 
 
     return (
-        <div>
+        <div className='w-[70%] mx-auto'>
             <DeliveryPartnerVerifyOtp email={email as string} />
         </div>
     );
