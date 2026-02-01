@@ -20,8 +20,8 @@ const SwitcherTabs = () => {
     ];
 
     return (
-        <div className="w-[70%] mx-auto ">
-            <div className="bg-primary/10 p-5 flex flex-col lg:flex-row items-center justify-center gap-5 rounded-lg w-full">
+        <div className="lg:w-[70%] mx-auto ">
+            <div className="bg-primary/10 p-5 flex flex-col md:flex-row items-center justify-center gap-5 rounded-lg w-full">
                 {
                     links.map(link => {
                         const isActive = pathname === link.href;

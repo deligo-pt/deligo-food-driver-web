@@ -4,7 +4,7 @@ import { DeliveryPartnerForm } from "@/components/DriverRegister/DeliveryPartner
 const DriverRegisterPage = () => {
 
     return (
-        <div className="flex justify-center items-center w-[90%] lg:w-[70%] mx-auto h-full">
+        <div className="flex justify-center items-center lg:w-[70%] mx-auto h-full">
             <DeliveryPartnerForm />
         </div>
     );

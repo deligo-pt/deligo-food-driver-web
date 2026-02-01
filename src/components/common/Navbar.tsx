@@ -15,7 +15,7 @@ const Navbar = () => {
     const { lang, setLang } = useStore();
 
     return (
-        <div className="flex items-center justify-between w-[90%] lg:w-[70%] mx-auto rounded-lg bg-gray-100 h-13 px-5">
+        <div className="flex items-center justify-between w-full lg:w-[70%] mx-auto rounded-lg bg-gray-100 h-13 px-5">
             {/* Logo Section */}
             <Link
                 href="/"

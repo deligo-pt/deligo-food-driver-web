@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`antialiased bg-gray-50`}>
-        <div className="w-[90%] lg:w-7xl mx-auto space-y-3 my-16">
+        <div className="w-[95%] lg:w-7xl mx-auto space-y-3 my-16">
           <Navbar />
           <SwitcherTabs />
           <div className="min-h-screen">{children}</div>
