@@ -72,11 +72,11 @@ export default function DeliveryPartnerVerifyOtp({ email }: { email: string }) {
 
                 if (result.success) {
                     toast.success("OTP verified successfully!", { id: toastId });
-                    const decoded = jwtDecode(result.data.accessToken) as { userId: string };
+                    const decoded = jwtDecode(result?.data?.accessToken) as { userId: string };
 
-                    Cookies.set("accessToken", result?.data.accessToken, { expires: 7 });
-                    Cookies.set("refreshToken", result?.data.refreshToken, { expires: 365 });
-                    
+                    Cookies.set("accessToken", result?.data?.accessToken, { expires: 7 });
+                    Cookies.set("refreshToken", result?.data?.refreshToken, { expires: 365 });
+
                     router.push(`/delivery-partner/${decoded?.userId}`);
                     return;
                 }

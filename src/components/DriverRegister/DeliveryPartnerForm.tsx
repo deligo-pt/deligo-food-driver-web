@@ -48,14 +48,13 @@ export function DeliveryPartnerForm() {
 
         try {
             const result = await createDeliveryPartner(data as FormData);
-            console.log("form result", result);
+
             if (result.success) {
                 toast.success(result?.message, {
                     id: toastId,
                 });
                 form.reset();
 
-                // router.push(`/verify-otp?email=mdmorshed0187@gmail.com`);
                 router.push(`/verify-otp?email=${result?.data?.email}`);
             } else if (result?.err?.statusCode === 409) {
                 toast.error(result?.message, { id: toastId })

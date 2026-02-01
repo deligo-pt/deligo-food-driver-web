@@ -1,0 +1,286 @@
+import { USER_STATUS } from "@/consts/user.const";
+import { TGeoJSONPoint } from ".";
+
+// export type TVehicleType = "BIKE" | "CAR" | "SCOOTER" | "BICYCLE" | "OTHER";
+export type TVehicleType =
+  | "BICYCLE"
+  | "E-BIKE"
+  | "SCOOTER"
+  | "MOTORBIKE"
+  | "CAR";
+export const currentStatusOptions = {
+  IDLE: 'IDLE',
+  OFFLINE: 'OFFLINE',
+  ON_DELIVERY: 'ON_DELIVERY',
+} as const;
+
+export type TDeliveryPartner = {
+  // -------------------------------------------------
+  // Core Identifiers & Credentials
+  // -------------------------------------------------
+  _id?: string;
+  userId: string;
+  registeredBy?: string;
+  role: "DELIVERY_PARTNER";
+  email: string;
+  status: keyof typeof USER_STATUS;
+  isEmailVerified: boolean;
+  isDeleted: boolean;
+  isUpdateLocked: boolean;
+
+  // FCM tokens
+  fcmTokens?: string[];
+
+  // --------------------------------------------------------
+  // Pending temporary Email and contact number
+  // --------------------------------------------------------
+  pendingEmail?: string;
+  pendingContactNumber?: string;
+
+  // ------------------------------------------------------
+  // OTP & Password Reset
+  // ------------------------------------------------------
+  otp?: string;
+  isOtpExpired?: Date;
+  requiresOtpVerification?: boolean;
+
+  passwordResetToken?: string;
+  passwordResetTokenExpiresAt?: Date;
+  passwordChangedAt?: Date;
+
+  // -------------------------------------------------
+  // 1) Personal Information
+  // -------------------------------------------------
+  name?: {
+    firstName?: string;
+    lastName?: string;
+  };
+  contactNumber?: string;
+  profilePhoto?: string;
+  address?: {
+    street?: string;
+    city?: string;
+    state?: string;
+    country?: string;
+    postalCode?: string;
+    longitude?: number;
+    latitude?: number;
+    geoAccuracy?: number;
+    detailedAddress?: string;
+  };
+
+  // -------------------------------------------------
+  // Live Location (Required for Geo-Search & Nearest Match)
+  // -------------------------------------------------
+  currentSessionLocation: TGeoJSONPoint;
+  personalInfo?: {
+    dateOfBirth?: Date;
+    gender?: 'MALE' | 'FEMALE' | 'OTHER';
+    nationality?: string;
+    NIF?: string;
+    citizenCardNumber?: string;
+    passportNumber?: string;
+    idExpiryDate?: Date;
+  };
+
+  // -------------------------------------------------
+  // 2) Legal Status / Work Rights
+  // -------------------------------------------------
+  legalStatus?: {
+    residencePermitType?: string;
+    residencePermitNumber?: string;
+    residencePermitExpiry?: Date;
+  };
+
+  // -------------------------------------------------
+  // 3) Payment & Banking Details
+  // -------------------------------------------------
+  bankDetails?: {
+    bankName?: string;
+    accountHolderName?: string;
+    iban?: string;
+    swiftCode?: string;
+  };
+
+  // -------------------------------------------------
+  // 4) Vehicle Information
+  // -------------------------------------------------
+  vehicleInfo?: {
+    vehicleType?: 'BICYCLE' | 'E-BIKE' | 'SCOOTER' | 'MOTORBIKE' | 'CAR';
+    brand?: string;
+    model?: string;
+    licensePlate?: string;
+    drivingLicenseNumber?: string;
+    drivingLicenseExpiry?: Date;
+    insurancePolicyNumber?: string;
+    insuranceExpiry?: Date;
+  };
+
+  // -------------------------------------------------
+  // 5) Criminal Background
+  // -------------------------------------------------
+  criminalRecord?: {
+    certificate?: boolean;
+    issueDate?: Date;
+  };
+
+  // -------------------------------------------------
+  // 6) Work Preferences & Equipment
+  // -------------------------------------------------
+  workPreferences?: {
+    preferredZones?: string[];
+    preferredHours?: string[];
+    hasEquipment?: {
+      isothermalBag?: boolean;
+      helmet?: boolean;
+      powerBank?: boolean;
+    };
+    workedWithOtherPlatform?: boolean;
+    otherPlatformName?: string;
+  };
+
+  // -------------------------------------------------
+  // 7) Operational Statistics
+  // -------------------------------------------------
+  operationalData?: {
+    totalDeliveries?: number;
+    completedDeliveries?: number;
+    canceledDeliveries?: number;
+
+    totalOfferedOrders?: number;
+    totalAcceptedOrders?: number;
+    totalRejectedOrders?: number;
+    totalDeliveryMinutes?: number;
+
+    currentStatus: keyof typeof currentStatusOptions; // Current working state (IDLE, ON_DELIVERY, OFFLINE)
+    assignmentZoneId: string;
+    currentZoneId?: string; // DeliGo Zone ID (e.g., 'Lisbon-Zone-02')
+    currentOrderId?: string; // List of active order IDs they are currently fulfilling
+    capacity: number; // Max number of orders the driver can carry (e.g., 2 or 3)
+    isWorking: boolean; // Simple flag: Clocked in/out
+
+    lastActivityAt?: Date;
+  };
+
+  // -------------------------------------------------
+  // 8) Earnings Summary
+  // -------------------------------------------------
+  earnings?: {
+    totalEarnings?: number;
+    pendingEarnings?: number;
+  };
+
+  // -------------------------------------------------
+  // 9) Documents
+  // -------------------------------------------------
+  documents?: {
+    idProofFront?: string;
+    idProofBack?: string;
+    drivingLicenseFront?: string;
+    drivingLicenseBack?: string;
+    vehicleRegistration?: string;
+    criminalRecordCertificate?: string;
+  };
+
+  // -------------------------------------------------
+  // 10) Security & Access
+  // -------------------------------------------------
+  twoFactorEnabled?: boolean;
+
+  // -------------------------------------------------
+  // 11) Admin Workflow (Approval System)
+  // -------------------------------------------------
+  approvedBy?: string;
+  rejectedBy?: string;
+  blockedBy?: string;
+  submittedForApprovalAt?: Date;
+  approvedOrRejectedOrBlockedAt?: Date;
+  remarks?: string;
+
+  rating?: {
+    average: number;
+    totalReviews: number;
+  };
+
+  // -------------------------------------------------
+  // Timestamps
+  // -------------------------------------------------
+  createdAt?: Date;
+  updatedAt?: Date;
+};
+
+export type TDeliveryPartnersQueryParams = {
+  limit?: number;
+  page?: number;
+  searchTerm?: string;
+  sortBy?: string;
+  status?: string;
+};
+
+
+export interface IDeliveryPartnerCard {
+  _id: string;
+
+  name: {
+    firstName: string;
+    lastName: string;
+  };
+
+  personalInfo: {
+    gender: "MALE" | "FEMALE" | "OTHER";
+    nationality: string;
+  };
+
+  operationalData: {
+    completedDeliveries: number;
+  };
+
+  rating: {
+    average: number;
+    totalReviews: number;
+  };
+
+  vehicleInfo: {
+    vehicleType: string;
+    brand: string;
+    model: string;
+    licensePlate: string;
+    drivingLicenseNumber: string;
+    drivingLicenseExpiry: string;
+    insurancePolicyNumber: string;
+    insuranceExpiry: string;
+  };
+}
+
+
+
+export interface IPartnersAnalyticsResponse {
+  cards: {
+    avgAcceptanceRate: string
+    avgDeliveryTime: string
+    topPartnerDeliveries: number
+    totalEarnings: string
+  }
+
+  table: {
+    data: PartnerRow[]
+    meta: {
+      page: number
+      limit: number
+      total: number
+      totalPage: number
+    }
+  }
+}
+
+export interface PartnerRow {
+  id: string
+  displayId: string
+  name: string
+  vehicle: string
+  city: string
+  deliveries: number
+  acceptance: string
+  avgMins: string
+  earnings: string
+}

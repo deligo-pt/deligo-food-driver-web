@@ -113,4 +113,50 @@ export const pt = {
     criminal_record_certification: "Certificado de Registo Criminal",
     select_file: "Selecionar ficheiro",
     complete_submit: "Concluir e submeter",
+
+    // status-check
+    registration_pending: "Registo Pendente",
+    registration_completed: "Registo Concluído",
+    registration_approved: "Registo Aprovado",
+    registration_rejected: "Registo Rejeitado",
+
+    you_didnot_submit:
+        "Não submeteu os dados de registo. Por favor, tente novamente.",
+    you_submitted:
+        "Parabéns! Submeteu com sucesso os seus dados de registo.",
+    submission_approved:
+        "Parabéns! O seu registo foi aprovado. Já pode aceder ao painel.",
+    submission_rejected:
+        "Lamentamos! O seu registo foi rejeitado.",
+
+    submissionInProgress: "Submissão em Curso",
+    submissionProgressDesc:
+        "Ainda não submeteu os seus dados de registo. Para concluir o processo, clique no botão abaixo.",
+
+    reviewInProgress: "Em Análise",
+    reviewInProgressDesc:
+        "A nossa equipa administrativa está a analisar as suas informações. Receberá uma atualização dentro de",
+    hours24_48: "24–48 horas",
+    reviewInProgressDesc2:
+        "após a conclusão do processo de verificação.",
+
+    nextStep: "Próximo Passo — Verificação",
+    nextStepDesc:
+        "Assim que os seus dados forem verificados, tornar-se-á um",
+    verifiedPartner: "Parceiro Verificado",
+    nextStepDesc2:
+        "e terá acesso ao painel, gestão de loja e pagamentos.",
+
+    approvedByAdmin: "Aprovado pelo Administrador",
+    rejectedByAdmin: "Rejeitado pelo Administrador",
+
+    check_again: "Verificar novamente",
+    applicationStatus:
+        "Pode verificar o estado da sua candidatura aqui a qualquer momento.",
+    applicationApproved:
+        "Aguarde a aprovação da sua candidatura.",
+    loginAgainDesc:
+        "Para aceder ao seu painel, precisa de iniciar sessão novamente.",
+    applicationTryAgain:
+        "A sua candidatura foi rejeitada. Pode tentar novamente.",
 }
