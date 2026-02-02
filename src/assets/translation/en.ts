@@ -42,7 +42,7 @@ export const en = {
     right_to_work: "Right to Work",
     please_provide_details_partner: "Please provide details about partner’s legal status",
     residence_permit_type: "Residence Permit Type",
-    arc_number: "ARC / título de residência Number",
+    trc_number: "TRC / título de residência Number",
     expiration_date: "Expiration Date",
     continue_to_payment_details: "Continue to Payment Details",
 
@@ -96,7 +96,7 @@ export const en = {
     full_day: "Full Day",
     flexible: "Flexible",
     delivery_equipment: "Delivery equipment?",
-    isothermal_bag: "Isothermal Bag",
+    delivery_bag: "Delivery Bag",
     helmet: "Helmet",
     power_bank: "Power Bank",
     worked_with_other_delivery_platform: "Worked with other delivery platforms?",
@@ -112,6 +112,8 @@ export const en = {
     driving_license_back: "Driving License Back",
     vehicle_registration: "Vehicle Registration",
     criminal_record_certification: "Criminal Record Certificate",
+    activity: "Activity (optional)",
+    insurance_policy: "Insurance Policy (optional)",
     select_file: "Select file",
     complete_submit: "Complete & Submit",
 
@@ -155,7 +157,12 @@ export const en = {
     applicationTryAgain: 'Your application has been rejected. You can try again.',
 
     // others
+    verifyOTP: "Verify OTP",
     otp4DigitCode: "Enter the 4-digit code sent to your email",
+    expired: "Expired",
+    remaining: "remaining",
+    resendOTP: 'Resend OTP',
+    verify: "Verify",
     bankName: "Bank Name",
     accountHolder: "Account Holder",
     iban: "IBAN",

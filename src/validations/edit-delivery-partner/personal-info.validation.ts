@@ -3,6 +3,13 @@ import parsePhoneNumberFromString, {
 } from "libphonenumber-js";
 import z from "zod";
 
+const optionalIdField = z
+  .string()
+  .trim()
+  .min(5, "Must be at least 5 characters")
+  .optional()
+  .or(z.literal(""));
+
 export const personalInfoValidation = z
   .object({
     firstName: z
@@ -41,15 +48,9 @@ export const personalInfoValidation = z
       .min(9, "NIF number must be at least 9 characters")
       .nonempty("NIF number is required"),
 
-    citizenCardNumber: z
-      .string()
-      .min(5, "Citizen card number must be at least 5 characters")
-      .nonempty("Citizen card number is required"),
+    citizenCardNumber: optionalIdField,
 
-    passportNumber: z
-      .string()
-      .min(5, "Passport number must be at least 5 characters")
-      .optional(),
+    passportNumber: optionalIdField,
 
     idExpiryDate: z
       .string()
@@ -87,6 +88,23 @@ export const personalInfoValidation = z
       .nonempty("Country is required")
       .min(2, "Country must be at least 2 characters")
       .max(50, "Country must be at most 50 characters"),
+  })
+  .superRefine((data, ctx) => {
+    const hasCitizen = !!data.citizenCardNumber;
+    const hasPassport = !!data.passportNumber;
+
+    if (!hasCitizen && !hasPassport) {
+      ctx.addIssue({
+        path: ["citizenCardNumber"],
+        message: "Either Citizen Card Number or Passport Number is required",
+        code: "custom",
+      });
+      ctx.addIssue({
+        path: ["passportNumber"],
+        message: "Either Passport Number or Citizen Card Number is required",
+        code: "custom",
+      });
+    }
   })
   .refine(
     (data) => {

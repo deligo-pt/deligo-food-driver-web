@@ -24,7 +24,9 @@ type DocKey =
   | "drivingLicenseFront"
   | "drivingLicenseBack"
   | "vehicleRegistration"
-  | "criminalRecordCertificate";
+  | "criminalRecordCertificate"
+  | "activity"
+  | "insurancePolicy";
 
 type FilePreview = {
   file: File | null;
@@ -32,9 +34,18 @@ type FilePreview = {
   isImage: boolean;
 };
 
+const OPTIONAL_DOCS: DocKey[] = ["activity", "insurancePolicy", "drivingLicenseFront", "drivingLicenseBack",];
+
+const REQUIRED_DOCS: DocKey[] = [
+  "idProofFront",
+  "idProofBack",
+  "vehicleRegistration",
+  "criminalRecordCertificate",
+];
+
 export default function Documents({ id }: { id: string }) {
   const { t } = useTranslation();
-  //   const [haveCriminalCertificate, setHaveCriminalCertificate] = useState(false);
+
   const [previews, setPreviews] = useState<Record<DocKey, FilePreview | null>>({
     idProofFront: null,
     idProofBack: null,
@@ -42,10 +53,11 @@ export default function Documents({ id }: { id: string }) {
     drivingLicenseBack: null,
     vehicleRegistration: null,
     criminalRecordCertificate: null,
+    activity: null,
+    insurancePolicy: null,
   });
   const router = useRouter();
   const inputsRef = useRef<Record<string, HTMLInputElement | null>>({});
-
 
   const DOCUMENTS: {
     key: DocKey;
@@ -82,7 +94,21 @@ export default function Documents({ id }: { id: string }) {
         label: t("criminal_record_certification"),
         prefersImagePreview: true,
       },
+      {
+        key: "activity",
+        label: t("activity"),
+        prefersImagePreview: true,
+      },
+      {
+        key: "insurancePolicy",
+        label: t("insurance_policy"),
+        prefersImagePreview: true,
+      },
     ];
+
+  const isFormValid = REQUIRED_DOCS.every(
+    (key) => previews[key] !== null
+  );
 
   const openPicker = (key: DocKey) => {
     const el = inputsRef.current[key];
@@ -154,6 +180,8 @@ export default function Documents({ id }: { id: string }) {
           drivingLicenseBack: null,
           vehicleRegistration: null,
           criminalRecordCertificate: null,
+          activity: null,
+          insurancePolicy: null,
         };
 
         (Object.keys(docs) as DocKey[]).forEach((key) => {
@@ -189,10 +217,14 @@ export default function Documents({ id }: { id: string }) {
 
   const completeReg = async () => {
     const toastId = toast.loading("Uploading...");
+    if (!isFormValid) {
+      toast.error("Please upload all required documents", { id: toastId });
+      return;
+    }
+
     try {
 
       const result = await submitForApproval(id as string);
-      console.log("final result", result);
 
       if (result.success) {
         toast.success(
@@ -352,20 +384,22 @@ export default function Documents({ id }: { id: string }) {
 
       <div className="pt-4">
         <motion.button
-          whileHover={{
-            scale: 1.02,
-          }}
-          whileTap={{
-            scale: 0.98,
-          }}
-          type="submit"
-          className="mt-8 w-full bg-[#DC3173] text-white py-3 px-6 rounded-lg font-medium text-lg hover:bg-[#c21c5e] transition-colors duration-300 flex items-center justify-center"
-          //   disabled={!DOCUMENTS.every((d) => !!previews[d.key])}
+          whileHover={{ scale: isFormValid ? 1.02 : 1 }}
+          whileTap={{ scale: isFormValid ? 0.98 : 1 }}
+          type="button"
+          disabled={!isFormValid}
           onClick={completeReg}
+          className={`mt-8 w-full py-3 px-6 rounded-lg font-medium text-lg flex items-center justify-center transition-colors duration-300
+    ${isFormValid
+              ? "bg-[#DC3173] text-white hover:bg-[#c21c5e]"
+              : "bg-gray-300 text-gray-500 cursor-not-allowed"
+            }
+  `}
         >
           {t("complete_submit")}
           <CheckIcon className="w-5 h-5 ml-1" />
         </motion.button>
+
       </div>
     </div>
   );

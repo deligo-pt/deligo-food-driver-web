@@ -27,6 +27,7 @@ import {
     LoaderIcon,
     ShieldCheck,
 } from "lucide-react";
+import Cookies from "js-cookie";
 import { Input } from "@/components/ui/input";
 import { useTranslation } from "@/hooks/use-translation";
 import { postData } from "@/utils/requests";
@@ -43,11 +44,13 @@ import { jwtDecode } from "jwt-decode";
 import { getDeliveryPartnerDetails } from "@/services/deliveryPartner/deliveryPartner";
 import { TDeliveryPartner } from "@/types/delivery-partner.type";
 import { TResponse } from "@/types";
+import { useRouter } from "next/navigation";
 
 type FormData = z.infer<typeof deliveryPartnerValidation>;
 
 export function StatusCheckForm() {
     const { t } = useTranslation();
+    const router = useRouter();
     const [step, setStep] = useState(0);
     const [partner, setPartner] = useState<TDeliveryPartner | null>(null);
     const [showPassword, setShowPassword] = useState(false);
@@ -82,6 +85,9 @@ export function StatusCheckForm() {
                 });
                 form.reset();
 
+                Cookies.set("accessToken", result?.data?.accessToken, { expires: 0.0069 });
+                Cookies.set("refreshToken", result?.data?.refreshToken, { expires: 0.0207 });
+
                 const partnerDetails = await getDeliveryPartnerDetails(decoded?.userId);
 
                 setPartner(partnerDetails);
@@ -91,11 +97,11 @@ export function StatusCheckForm() {
                 toast.error(result?.message, { id: toastId })
             }
         } catch (error: any) {
+            console.log(error);
             toast.error(
-                error?.response?.data?.message || "Status checking failed",
+                error?.response?.data?.message || error?.meessage || "Status checking failed",
                 { id: toastId }
             );
-            console.log(error);
         }
     };
 
@@ -395,9 +401,12 @@ export function StatusCheckForm() {
                                         <>
                                             <Button
                                                 className="px-8 py-3 bg-[#DC3173] hover:bg-[#b72a63] text-white rounded-xl text-lg font-medium shadow-lg transition-all duration-300"
-                                                onClick={() =>
-                                                    setStep(0)
-                                                }
+                                                onClick={() => {
+                                                    setStep(0);
+                                                    router.refresh()
+                                                    Cookies.remove("accessToken");
+                                                    Cookies.remove("refreshToken");
+                                                }}
                                             >
                                                 {t("check_again")}
                                             </Button>
@@ -410,9 +419,11 @@ export function StatusCheckForm() {
                                         <>
                                             <Button
                                                 className="px-8 py-3 bg-[#DC3173] hover:bg-[#b72a63] text-white rounded-xl text-lg font-medium shadow-lg transition-all duration-300"
-                                                onClick={() =>
-                                                    setStep(0)
-                                                }
+                                                onClick={() => {
+                                                    setStep(0);
+                                                    Cookies.remove("accessToken");
+                                                    Cookies.remove("refreshToken");
+                                                }}
                                             >
                                                 {t("check_again")}
                                             </Button>
@@ -426,9 +437,11 @@ export function StatusCheckForm() {
                                         <>
                                             <Button
                                                 className="px-8 py-3 bg-[#DC3173] hover:bg-[#b72a63] text-white rounded-xl text-lg font-medium shadow-lg transition-all duration-300"
-                                                onClick={() =>
-                                                    setStep(0)
-                                                }
+                                                onClick={() => {
+                                                    setStep(0);
+                                                    Cookies.remove("accessToken");
+                                                    Cookies.remove("refreshToken");
+                                                }}
                                             >
                                                 {t("check_again")}
                                             </Button>
@@ -442,9 +455,11 @@ export function StatusCheckForm() {
                                         <>
                                             <Button
                                                 className="px-8 py-3 bg-[#DC3173] hover:bg-[#b72a63] text-white rounded-xl text-lg font-medium shadow-lg transition-all duration-300"
-                                                onClick={() =>
-                                                    setStep(0)
-                                                }
+                                                onClick={() => {
+                                                    setStep(0);
+                                                    Cookies.remove("accessToken");
+                                                    Cookies.remove("refreshToken");
+                                                }}
                                             >
                                                 {t("check_again")}
                                             </Button>

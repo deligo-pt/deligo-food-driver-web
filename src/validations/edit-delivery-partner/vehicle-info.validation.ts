@@ -1,52 +1,57 @@
-
 import { z } from "zod";
 
+
+const optionalString = z
+  .string()
+  .min(2, "Must be at least 2 characters")
+  .optional()
+  .or(z.literal(""));
+
 const baseFields = {
-  vehicleType: z.enum(["BICYCLE", "E-BIKE", "SCOOTER", "MOTORBIKE", "CAR"]),
-  brand: z.string().min(2, "Brand is required"),
-  model: z.string().min(2, "Model is required"),
+  brand: optionalString,
+  model: optionalString,
 };
 
 const motorVehicleFields = {
   licensePlate: z.string().min(2, "License plate is required"),
   drivingLicenseNumber: z.string().min(2, "Driving license number is required"),
-  drivingLicenseExpiry: z.string().refine(
-    (v) => !isNaN(Date.parse(v)),
-    "Invalid date"
-  ),
-  insurancePolicyNumber: z.string().min(2, "Insurance policy number is required"),
-  insuranceExpiry: z.string().refine(
-    (v) => !isNaN(Date.parse(v)),
-    "Invalid date"
-  ),
+  drivingLicenseExpiry: z
+    .string()
+    .refine((v) => !isNaN(Date.parse(v)), "Invalid date"),
+  insurancePolicyNumber: z
+    .string()
+    .min(2, "Insurance policy number is required"),
+  insuranceExpiry: z
+    .string()
+    .refine((v) => !isNaN(Date.parse(v)), "Invalid date"),
 };
 
 export const vehicleInfoValidation = z.discriminatedUnion("vehicleType", [
   z.object({
-    ...baseFields,
     vehicleType: z.literal("BICYCLE"),
+    ...baseFields,
   }),
 
   z.object({
-    ...baseFields,
     vehicleType: z.literal("E-BIKE"),
+    ...baseFields,
   }),
 
   z.object({
-    ...baseFields,
-    ...motorVehicleFields,
     vehicleType: z.literal("SCOOTER"),
+    ...baseFields,
+    ...motorVehicleFields,
   }),
 
   z.object({
-    ...baseFields,
-    ...motorVehicleFields,
     vehicleType: z.literal("MOTORBIKE"),
+    ...baseFields,
+    ...motorVehicleFields,
   }),
 
   z.object({
+    vehicleType: z.literal("CAR"),
     ...baseFields,
     ...motorVehicleFields,
-    vehicleType: z.literal("CAR"),
   }),
 ]);

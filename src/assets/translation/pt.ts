@@ -44,7 +44,7 @@ export const pt = {
     right_to_work: "Direito a trabalhar",
     please_provide_details_partner: "Forneça informações sobre o estado legal do parceiro",
     residence_permit_type: "Tipo de autorização de residência",
-    arc_number: "Número do ARC / Título de residência",
+    trc_number: "Número do TRC / Título de residência",
     expiration_date: "Data de validade",
     continue_to_payment_details: "Continuar para detalhes de pagamento",
 
@@ -97,7 +97,7 @@ export const pt = {
     full_day: "Dia inteiro",
     flexible: "Flexível",
     delivery_equipment: "Equipamento de entrega?",
-    isothermal_bag: "Mala térmica",
+    delivery_bag: "Saco de Entrega",
     helmet: "Capacete",
     power_bank: "Power bank",
     worked_with_other_delivery_platform: "Trabalhou com outras plataformas de entrega?",
@@ -113,6 +113,8 @@ export const pt = {
     driving_license_back: "Carta de condução (verso)",
     vehicle_registration: "Documento do veículo",
     criminal_record_certification: "Certificado de Registo Criminal",
+    activity: "Atividade (opcional)",
+    insurance_policy: "Apólice de Seguro (opcional)",
     select_file: "Selecionar ficheiro",
     complete_submit: "Concluir e submeter",
 
@@ -174,8 +176,13 @@ export const pt = {
         "A sua candidatura foi rejeitada. Pode tentar novamente.",
 
     // others
+    verifyOTP: "Verificar OTP",
     otp4DigitCode:
         "Introduza o código de 4 dígitos enviado para o seu email",
+    expired: "Expirado",
+    remaining: "restante",
+    resendOTP: "Reenviar OTP",
+    verify: "Verificar",
     bankName: "Nome do Banco",
     accountHolder: "Titular da Conta",
     iban: "IBAN",

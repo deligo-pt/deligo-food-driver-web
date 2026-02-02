@@ -111,7 +111,7 @@ export function DeliveryPartnerForm() {
                                 </motion.div>
                             </div>
                             <CardTitle className="text-center text-[#DC3173]">
-                                {t("delivery_partner_registration")}
+                                Create an account
                             </CardTitle>
                             <CardDescription className="text-center">
                                 {t("join_our_delivery_network")}
