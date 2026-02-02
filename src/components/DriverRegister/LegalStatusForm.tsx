@@ -42,8 +42,6 @@ interface IProps {
 type FormData = z.infer<typeof legalStatusValidation>;
 
 const permitTypes = [
-  "D2 Visa",
-  "D4 Student Visa",
   "Temporary Residence",
   "Permanent Residence",
   "EU Citizen",
@@ -194,7 +192,7 @@ export function LegalStatusForm({ onNext, id }: IProps) {
                   <FormLabel className="block text-sm font-medium text-gray-700 mb-1">
                     <div className="flex items-center">
                       <IdCardIcon className="w-5 h-5 text-[#DC3173]" />
-                      <span className="ml-2">{t("arc_number")}</span>
+                      <span className="ml-2">{t("trc_number")}</span>
                     </div>
                   </FormLabel>
                   <FormControl>
