@@ -11,15 +11,15 @@ const SwitcherTabs = () => {
     const pathname = usePathname();
     const links = [
         {
-            href: "/driver-register",
-            label: t("driver_registration_form"),
+            href: "/rider-registration",
+            label: t("rider_registration_form"),
         },
         {
             href: "/status-check",
             label: t("status_check"),
         }
     ];
-    const go_back_action = pathname === '/driver-register' || pathname === '/verify-otp' || pathname === '/status-check';
+    const go_back_action = pathname === '/rider-registration' || pathname === '/verify-otp' || pathname === '/status-check';
 
     return (
         <div className="lg:w-[70%] mx-auto ">
@@ -38,7 +38,7 @@ const SwitcherTabs = () => {
                     })
                 }
             </div>}
-            {pathname === "/driver-register" && (
+            {pathname === "/rider-registration" && (
                 <motion.div
                     initial={{
                         opacity: 0,
@@ -68,7 +68,7 @@ const SwitcherTabs = () => {
                 !go_back_action && (
                     <div className="bg-primary/10 p-5 flex flex-col md:flex-row items-center justify-start gap-5 rounded-lg w-full font-semibold">
                         <Button variant="default">
-                            <Link href="/driver-register">
+                            <Link href="/rider-registration">
                                 Go to Home
                             </Link>
                         </Button>

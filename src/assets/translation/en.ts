@@ -118,7 +118,7 @@ export const en = {
     complete_submit: "Complete & Submit",
 
     // switcher tabs
-    driver_registration_form: "Driver Registration Form",
+    rider_registration_form: "Rider Registration Form",
     status_check: "Status Check",
     // -> notes
     note: "Note",
