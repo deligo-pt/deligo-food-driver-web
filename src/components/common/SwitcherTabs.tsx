@@ -22,7 +22,7 @@ const SwitcherTabs = () => {
     const go_back_action = pathname === '/rider-registration' || pathname === '/verify-otp' || pathname === '/status-check';
 
     return (
-        <div className="lg:w-[70%] mx-auto ">
+        <div className="w-[95%] md:w-[90%] lg:w-[70%] mx-auto ">
             {go_back_action && <div className="bg-primary/10 p-5 flex flex-col md:flex-row items-center justify-center gap-5 rounded-lg w-full">
                 {
                     links.map(link => {

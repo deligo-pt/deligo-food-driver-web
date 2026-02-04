@@ -299,7 +299,7 @@ export default function Documents({ id }: { id: string }) {
             >
               <div className="flex items-center gap-4">
                 <div
-                  className={`w-14 h-14 rounded-lg flex items-center justify-center ${isSelected ? "bg-[#DC3173]/10" : "bg-gray-50"
+                  className={`w-8 h-8 md:w-14 md:h-14 rounded-lg flex items-center justify-center ${isSelected ? "bg-[#DC3173]/10" : "bg-gray-50"
                     }`}
                 >
                   {d.prefersImagePreview ? (
@@ -330,7 +330,7 @@ export default function Documents({ id }: { id: string }) {
                             className="object-cover rounded-md border"
                             unoptimized
                           />
-                          <div className="truncate">
+                          <div className="truncate hidden md:block">
                             {preview.file?.name ||
                               getActualFileName(preview.url || "")}
                           </div>
@@ -369,7 +369,7 @@ export default function Documents({ id }: { id: string }) {
                 />
 
                 {preview ? (
-                  <>
+                  <div className="flex flex-col md:flex-row">
                     <button
                       onClick={() =>
                         preview.url
@@ -387,7 +387,7 @@ export default function Documents({ id }: { id: string }) {
                     >
                       {t("removeCTA")}
                     </button>
-                  </>
+                  </div>
                 ) : (
                   <button
                     onClick={() => openPicker(d.key)}
