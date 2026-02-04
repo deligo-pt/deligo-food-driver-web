@@ -2,9 +2,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Toaster } from "sonner";
-import Navbar from "@/components/common/Navbar";
 import 'react-international-phone/style.css';
-import SwitcherTabs from "@/components/common/SwitcherTabs";
 
 export const metadata: Metadata = {
   title: "DeliGo Rider Registration Form | Check Status",
@@ -20,11 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`antialiased bg-gray-50`}>
-        <div className="w-[95%] lg:w-7xl mx-auto space-y-3 my-16">
-          <Navbar />
-          <SwitcherTabs />
-          <div className="min-h-screen">{children}</div>
-        </div>
+        {children}
         <Toaster richColors position="top-center" />
       </body>
     </html>
