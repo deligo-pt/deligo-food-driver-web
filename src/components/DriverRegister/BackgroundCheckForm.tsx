@@ -35,8 +35,11 @@ export function BackgroundCheckForm({ onNext, id }: IProps) {
     defaultValues: {
       haveCriminalRecordCertificate: false,
       issueDate: "",
+      expiryDate: "",
     },
   });
+
+  const hasCertificate = form.watch("haveCriminalRecordCertificate");
 
   const onSubmit = async (values: FormData) => {
     const toastId = toast.loading("Updating Delivery Partner details...");
@@ -47,16 +50,17 @@ export function BackgroundCheckForm({ onNext, id }: IProps) {
           certificate: values.haveCriminalRecordCertificate,
           ...(values.haveCriminalRecordCertificate && {
             issueDate: new Date(values.issueDate || "").toISOString(),
+            expiryDate: new Date(values.expiryDate || "").toISOString(),
           }),
         },
       };
       if (
         !values.haveCriminalRecordCertificate &&
-        payload?.criminalRecord?.issueDate
+        payload?.criminalRecord?.issueDate && payload?.criminalRecord?.expiryDate
       ) {
         delete payload?.criminalRecord?.issueDate;
+        delete payload?.criminalRecord?.expiryDate;
       }
-
       const result = await updatePartnerInformation(id as string, payload);
 
       if (result.success) {
@@ -91,11 +95,24 @@ export function BackgroundCheckForm({ onNext, id }: IProps) {
           "issueDate",
           (result?.data?.criminalRecord?.issueDate as unknown as string) || "",
         );
+        form.setValue(
+          "expiryDate",
+          (result?.data?.criminalRecord?.expiryDate as unknown as string) || "",
+        );
       }
     } catch (error) {
       console.log("Error fetching delivery partner data:", error);
     }
   };
+
+  useEffect(() => {
+    if (!hasCertificate) {
+      form.setValue("issueDate", "");
+      form.setValue("expiryDate", "");
+      form.clearErrors(["issueDate", "expiryDate"]);
+    }
+  }, [hasCertificate, form]);
+
 
   useEffect(() => {
     (() => getPartnerData())();
@@ -206,6 +223,37 @@ export function BackgroundCheckForm({ onNext, id }: IProps) {
                       onChange={field.onChange}
                       value={field.value as string}
                       isInvalid={fieldState.invalid}
+                      disabled={!hasCertificate}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="expiryDate"
+              render={({ field, fieldState }) => (
+                <FormItem className="content-start">
+                  <FormLabel
+                    htmlFor="expiryDate"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  >
+                    <div className="flex items-center">
+                      <CalendarIcon className="w-5 h-5 text-[#DC3173]" />
+                      <span className="ml-2">
+                        {t("certificate_expiry_date")}
+                      </span>
+                    </div>
+                  </FormLabel>
+                  <FormControl>
+                    <DatePicker
+                      inputId="expiryDate"
+                      onChange={field.onChange}
+                      value={field.value as string}
+                      isInvalid={fieldState.invalid}
+                      disabled={!hasCertificate}
                     />
                   </FormControl>
                   <FormMessage />

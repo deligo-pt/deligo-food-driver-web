@@ -256,10 +256,31 @@ export default function Documents({ id }: { id: string }) {
   return (
     <div>
       <div className="flex items-center gap-4">
-        <div>
+        <div className="w-full">
           <CardTitle className="text-2xl font-semibold tracking-wide mb-4">
             {t("upload_your_documents")}
           </CardTitle>
+          <motion.div
+            initial={{
+              opacity: 0,
+              y: 20,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            transition={{
+              duration: 0.5,
+            }}
+            className="bg-primary/10 p-5 rounded-lg w-full text-primary italic my-3">
+            <h2 className="text-lg font-semibold">{t("note")} : </h2>
+            <p className="text-sm">
+              - {t("vehicle_type_bicycle")}
+            </p>
+            <p className="text-sm">
+              - {t("vehicle_type_not_bicycle")}
+            </p>
+          </motion.div>
         </div>
       </div>
 
@@ -278,7 +299,7 @@ export default function Documents({ id }: { id: string }) {
             >
               <div className="flex items-center gap-4">
                 <div
-                  className={`w-14 h-14 rounded-lg flex items-center justify-center ${isSelected ? "bg-[#DC3173]/10" : "bg-gray-50"
+                  className={`w-8 h-8 md:w-14 md:h-14 rounded-lg flex items-center justify-center ${isSelected ? "bg-[#DC3173]/10" : "bg-gray-50"
                     }`}
                 >
                   {d.prefersImagePreview ? (
@@ -309,7 +330,7 @@ export default function Documents({ id }: { id: string }) {
                             className="object-cover rounded-md border"
                             unoptimized
                           />
-                          <div className="truncate">
+                          <div className="truncate hidden md:block">
                             {preview.file?.name ||
                               getActualFileName(preview.url || "")}
                           </div>
@@ -348,7 +369,7 @@ export default function Documents({ id }: { id: string }) {
                 />
 
                 {preview ? (
-                  <>
+                  <div className="flex flex-col md:flex-row">
                     <button
                       onClick={() =>
                         preview.url
@@ -366,7 +387,7 @@ export default function Documents({ id }: { id: string }) {
                     >
                       {t("removeCTA")}
                     </button>
-                  </>
+                  </div>
                 ) : (
                   <button
                     onClick={() => openPicker(d.key)}

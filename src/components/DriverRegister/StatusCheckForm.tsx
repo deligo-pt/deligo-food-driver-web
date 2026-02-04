@@ -97,9 +97,9 @@ export function StatusCheckForm() {
                 toast.error(result?.message, { id: toastId })
             }
         } catch (error: any) {
-            console.log(error);
+            console.log(error?.message);
             toast.error(
-                error?.response?.data?.message || error?.meessage || "Status checking failed",
+                error?.message ? error?.message : error?.response?.data?.message || "Status checking failed",
                 { id: toastId }
             );
         }

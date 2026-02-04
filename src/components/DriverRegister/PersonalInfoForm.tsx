@@ -59,9 +59,7 @@ export function PersonalInfoForm({ onNext, id }: IProps) {
       nationality: "",
       gender: "MALE",
       nifNumber: "",
-      citizenCardNumber: "",
       passportNumber: "",
-      idExpiryDate: "",
       street: "",
       city: "",
       postalCode: "",
@@ -85,9 +83,7 @@ export function PersonalInfoForm({ onNext, id }: IProps) {
           nationality: values.nationality,
           gender: values.gender,
           nifNumber: values.nifNumber,
-          citizenCardNumber: values.citizenCardNumber,
           passportNumber: values.passportNumber,
-          idExpiryDate: new Date(values.idExpiryDate).toISOString(),
         },
         address: {
           street: values.street,
@@ -145,16 +141,8 @@ export function PersonalInfoForm({ onNext, id }: IProps) {
         form.setValue("gender", result?.data?.personalInfo?.gender || "MALE");
         form.setValue("nifNumber", result?.data?.personalInfo?.nifNumber || "");
         form.setValue(
-          "citizenCardNumber",
-          result?.data?.personalInfo?.citizenCardNumber || "",
-        );
-        form.setValue(
           "passportNumber",
           result?.data?.personalInfo?.passportNumber || "",
-        );
-        form.setValue(
-          "idExpiryDate",
-          (result?.data?.personalInfo?.idExpiryDate as unknown as string) || "",
         );
         form.setValue("street", result?.data?.address?.street || "");
         form.setValue("city", result?.data?.address?.city || "");
@@ -394,33 +382,6 @@ export function PersonalInfoForm({ onNext, id }: IProps) {
 
             <FormField
               control={form.control}
-              name="idExpiryDate"
-              render={({ field, fieldState }) => (
-                <FormItem className="content-start">
-                  <FormLabel
-                    htmlFor="idExpiryDate"
-                    className="block text-sm font-medium text-gray-700 mb-1"
-                  >
-                    <div className="flex items-center">
-                      <CalendarIcon className="w-5 h-5 text-[#DC3173]" />
-                      <span className="ml-2">{t("id_expiry_date")}</span>
-                    </div>
-                  </FormLabel>
-                  <FormControl>
-                    <DatePicker
-                      inputId="idExpiryDate"
-                      onChange={field.onChange}
-                      value={field.value}
-                      isInvalid={fieldState.invalid}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
               name="nifNumber"
               render={({ field }) => (
                 <FormItem className="content-start">
@@ -443,35 +404,13 @@ export function PersonalInfoForm({ onNext, id }: IProps) {
 
             <FormField
               control={form.control}
-              name="citizenCardNumber"
-              render={({ field }) => (
-                <FormItem className="content-start">
-                  <FormLabel className="block text-sm font-medium text-gray-700 mb-1">
-                    <div className="flex items-center">
-                      <IdCardIcon className="w-5 h-5 text-[#DC3173]" />
-                      <span className="ml-2">{t("citizen_card")}</span>
-                    </div>
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-[#DC3173] focus:border-[#DC3173] outline-none transition-all border-gray-300"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
               name="passportNumber"
               render={({ field }) => (
                 <FormItem className="content-start">
                   <FormLabel className="block text-sm font-medium text-gray-700 mb-1">
                     <div className="flex items-center">
                       <IdCardIcon className="w-5 h-5 text-[#DC3173]" />
-                      <span className="ml-2">{t("passport_number")}</span>
+                      <span className="ml-2">{t("passport_number_optional")}</span>
                     </div>
                   </FormLabel>
                   <FormControl>
@@ -563,7 +502,7 @@ export function PersonalInfoForm({ onNext, id }: IProps) {
                   <FormLabel className="block text-sm font-medium text-gray-700 mb-1">
                     <div className="flex items-center">
                       <MapPinIcon className="w-5 h-5 text-[#DC3173]" />
-                      <span className="ml-2">{t("state")}</span>
+                      <span className="ml-2">{t("state_optional")}</span>
                     </div>
                   </FormLabel>
                   <FormControl>

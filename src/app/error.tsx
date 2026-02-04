@@ -120,7 +120,7 @@ export default function GlobalError() {
           </Button>
 
           <Button
-            onClick={() => router.push("/driver-register")}
+            onClick={() => router.push("/rider-registration")}
             variant="outline"
             className="border-[#DC3173] text-[#DC3173] hover:bg-[#DC3173]/10 px-8 py-6 rounded-full text-lg font-semibold"
           >

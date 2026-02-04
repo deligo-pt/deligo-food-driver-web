@@ -217,7 +217,7 @@ export function NotFound() {
                                 scale: 0.95,
                             }}
                             className="group relative px-8 py-4 bg-[#DC3173] text-white rounded-full font-bold text-lg shadow-lg shadow-[#DC317330] overflow-hidden flex items-center gap-2"
-                            onClick={() => router.push("/driver-register")}
+                            onClick={() => router.push("/rider-registration")}
                         >
                             <span className="relative z-10 flex items-center gap-2">
                                 <Home size={20} />
