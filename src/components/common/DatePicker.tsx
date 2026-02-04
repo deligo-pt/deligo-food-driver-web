@@ -38,11 +38,13 @@ export function DatePicker({
     value,
     onChange,
     isInvalid,
+    disabled
 }: {
     inputId: string;
     value: string; // expecting ISO string "yyyy-mm-dd"
     onChange: (value: string) => void;
     isInvalid: boolean;
+    disabled?: boolean;
 }) {
     const isoDate = value ? new Date(value) : undefined;
     const displayValue = isoDate ? formatToDDMMYYYY(isoDate) : "";
@@ -59,11 +61,17 @@ export function DatePicker({
                 id={inputId}
                 value={displayValue}
                 placeholder="DD/MM/YYYY"
-                className={cn("bg-background pr-10", isInvalid && "border-red-500")}
+                disabled={disabled}
+                className={cn(
+                    "bg-background pr-10",
+                    disabled && "cursor-not-allowed bg-muted opacity-60",
+                    isInvalid && "border-red-500"
+                )}
                 autoComplete="off"
                 onChange={(e) => {
-                    const inputValue = e.target.value;
+                    if (disabled) return;
 
+                    const inputValue = e.target.value;
                     const parsed = parseDDMMYYYY(inputValue);
                     if (parsed) {
                         onChange(toISO(parsed));
@@ -71,6 +79,8 @@ export function DatePicker({
                     }
                 }}
                 onKeyDown={(e) => {
+                    if (disabled) return;
+
                     if (e.key === "ArrowDown") {
                         e.preventDefault();
                         setOpen(true);
@@ -78,11 +88,15 @@ export function DatePicker({
                 }}
             />
 
-            <Popover open={open} onOpenChange={setOpen}>
+            <Popover
+                open={disabled ? false : open}
+                onOpenChange={(v) => !disabled && setOpen(v)}
+            >
                 <PopoverTrigger asChild>
                     <Button
                         id="date-picker"
                         variant="ghost"
+                        disabled={disabled}
                         className="absolute top-1/2 right-2 size-6 -translate-y-1/2"
                     >
                         <CalendarIcon className="size-3.5" />
@@ -99,6 +113,7 @@ export function DatePicker({
                     {/* YEAR SELECTOR */}
                     <div className="flex items-center justify-between px-3 py-2 border-b bg-muted">
                         <select
+                            disabled={disabled}
                             className="bg-transparent text-sm"
                             value={month.getFullYear()}
                             onChange={(e) => {
@@ -125,9 +140,9 @@ export function DatePicker({
                         month={month}
                         onMonthChange={setMonth}
                         onSelect={(selectedDate) => {
-                            if (selectedDate) {
-                                onChange(toISO(selectedDate)); // save as ISO
-                            }
+                            if (disabled || !selectedDate) return;
+
+                            onChange(toISO(selectedDate));
                             setOpen(false);
                         }}
                     />

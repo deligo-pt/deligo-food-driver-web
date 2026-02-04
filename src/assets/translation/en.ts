@@ -31,11 +31,11 @@ export const en = {
     id_expiry_date: "ID Expiry Date",
     nif_number: "NIF Number",
     citizen_card: "Citizen Card Number",
-    passport_number: "Passport Number",
+    passport_number_optional: "Passport Number (Optional)",
     street: "Street",
     city: "City",
     postal_code: "Postal Code",
-    state: "State",
+    state_optional: "State (Optional)",
     country: "Country",
     continue_to_legal_status: "Continue to Legal Status",
     // -> legal status form
@@ -43,7 +43,7 @@ export const en = {
     please_provide_details_partner: "Please provide details about partner’s legal status",
     residence_permit_type: "Residence Permit Type",
     trc_number: "TRC / título de residência Number",
-    expiration_date: "Expiration Date",
+    trc_expiration_date: "TRC Expiration Date",
     continue_to_payment_details: "Continue to Payment Details",
 
     // -> payment details
@@ -82,6 +82,7 @@ export const en = {
     have_criminal_record_certificate: "Have Criminal Record Certificate",
     criminal_record_certificate: "Criminal Record Certificate (Certificado de Registo Criminal)",
     certificate_issue_date: "Certificate Issue Date",
+    certificate_expiry_date: "Certificate Expiry Date",
     continue_to_equipment: "Continue to Equipment & Availability",
 
 
@@ -106,6 +107,8 @@ export const en = {
 
     // -> upload documents
     upload_your_documents: "Upload Your Documents",
+    vehicle_type_bicycle: "If your vehicle type is Bicyle or E-Bike,then you don't have to submit Driving Licenses",
+    vehicle_type_not_bicycle: "If your vehicle type is not Bicycle or E-Bike,then you have to submit Driving Licenses for further assurance. If you don't submit, the authorities will not be responsible for it.",
     id_proof_front: "ID Proof Front",
     id_proof_back: "ID Proof Back",
     driving_license_front: "Driving License Front",

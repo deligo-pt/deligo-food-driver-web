@@ -218,7 +218,7 @@ export function LegalStatusForm({ onNext, id }: IProps) {
                   >
                     <div className="flex items-center">
                       <CalendarIcon className="w-5 h-5 text-[#DC3173]" />
-                      <span className="ml-2">{t("expiration_date")}</span>
+                      <span className="ml-2">{t("trc_expiration_date")}</span>
                     </div>
                   </FormLabel>
                   <FormControl>

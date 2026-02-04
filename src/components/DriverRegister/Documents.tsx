@@ -256,10 +256,31 @@ export default function Documents({ id }: { id: string }) {
   return (
     <div>
       <div className="flex items-center gap-4">
-        <div>
+        <div className="w-full">
           <CardTitle className="text-2xl font-semibold tracking-wide mb-4">
             {t("upload_your_documents")}
           </CardTitle>
+          <motion.div
+            initial={{
+              opacity: 0,
+              y: 20,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            transition={{
+              duration: 0.5,
+            }}
+            className="bg-primary/10 p-5 rounded-lg w-full text-primary italic my-3">
+            <h2 className="text-lg font-semibold">{t("note")} : </h2>
+            <p className="text-sm">
+              - {t("vehicle_type_bicycle")}
+            </p>
+            <p className="text-sm">
+              - {t("vehicle_type_not_bicycle")}
+            </p>
+          </motion.div>
         </div>
       </div>
 
