@@ -122,7 +122,7 @@ export const pt = {
     complete_submit: "Concluir e submeter",
 
     // switcher tabs
-    rider_registration_form: "Formulário de Registo de Estafeta",
+    rider_registration: "Formulário de Registo de Estafeta",
     status_check: "Verificação de status",
     note: "Nota",
     you_man_register_using_rider_form: "Você pode se cadastrar usando este formulário de registro de entregador.",

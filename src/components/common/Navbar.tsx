@@ -15,26 +15,25 @@ const Navbar = () => {
     const { lang, setLang } = useStore();
 
     return (
-        <div className="flex items-center justify-between w-[95%] md:w-[90%] lg:w-[70%] mx-auto rounded-lg bg-gray-100 h-13 px-5">
+        <div className="flex items-center justify-between w-[95%] md:w-[90%] lg:w-full mx-auto h-13 px-5 mt-2">
             {/* Logo Section */}
             <Link
                 href="/"
-                className="flex items-center gap-2 group transition-transform duration-300"
+                className="flex items-center gap-1 group transition-transform duration-300 p-1"
             >
                 {/* Animated Logo Image */}
-                <div className="w-9 h-9 overflow-hidden rounded-full transform transition-all duration-500 group-hover:scale-110 group-hover:rotate-6">
+                <div className="relative w-7 h-7 overflow-hidden rounded-full transform transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 shadow-primary/60 shadow-md">
                     <Image
                         src="/deligoLogo.png"
                         alt="DeliGo Logo"
-                        width={50}
-                        height={50}
+                        fill
                         className="object-cover"
                         unoptimized
                     />
                 </div>
 
                 {/* Brand Text */}
-                <span className="font-bold text-xl text-[#DC3173] group-hover:opacity-90 transition-opacity duration-300">
+                <span className="font-bold text-xl text-primary group-hover:opacity-90 transition-opacity duration-300">
                     DeliGo
                 </span>
             </Link>
@@ -43,7 +42,7 @@ const Navbar = () => {
                 value={lang}
                 onValueChange={(value: "en" | "pt") => setLang(value)}
             >
-                <SelectTrigger className="w-17.5 hover:border-primary">
+                <SelectTrigger className="w-17.5 hover:border-primary focus:ring-primary font-semibold">
                     <SelectValue placeholder="Language" />
                 </SelectTrigger>
 

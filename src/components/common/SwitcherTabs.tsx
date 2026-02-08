@@ -3,78 +3,79 @@
 import { useTranslation } from "@/hooks/use-translation";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion } from 'framer-motion';
-import { Button } from "../ui/button";
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 const SwitcherTabs = () => {
     const { t } = useTranslation();
     const pathname = usePathname();
-    const links = [
+
+    const tabs = [
         {
             href: "/rider-registration",
-            label: t("rider_registration_form"),
+            label: t("rider_registration"),
         },
         {
             href: "/status-check",
             label: t("status_check"),
-        }
+        },
     ];
-    const go_back_action = pathname === '/rider-registration' || pathname === '/verify-otp' || pathname === '/status-check';
+
+    const showTabs =
+        pathname === "/rider-registration" ||
+        pathname === "/verify-otp" ||
+        pathname === "/status-check";
 
     return (
-        <div className="w-[95%] md:w-[90%] lg:w-[70%] mx-auto ">
-            {go_back_action && <div className="bg-primary/10 p-5 flex flex-col md:flex-row items-center justify-center gap-5 rounded-lg w-full">
-                {
-                    links.map(link => {
-                        const isActive = pathname === link.href;
+        <div className="w-full flex flex-col items-center mt-1">
+            {showTabs && (
+                <div className="relative flex gap-10 border-b border-gray-200">
+                    {tabs.map((tab) => {
+                        const isActive = pathname === tab.href;
 
                         return (
-                            <Link key={link.href} href={link.href}
-                                className={isActive ? "text-primary font-semibold border-b border-primary/50 rounded-lg p-2 w-full text-center" : "text-secondary p-2 font-semibold w-full text-center"}
+                            <Link
+                                key={tab.href}
+                                href={tab.href}
+                                className={cn(
+                                    "relative pb-3 text-sm transition-colors font-semibold",
+                                    isActive
+                                        ? "text-primary"
+                                        : "text-gray-400 hover:text-gray-600"
+                                )}
                             >
-                                {link.label}
+                                {tab.label}
+
+                                {isActive && (
+                                    <motion.span
+                                        layoutId="active-tab"
+                                        className="absolute left-0 right-0 -bottom-px h-0.5 bg-[#DC3173] rounded-full"
+                                    />
+                                )}
                             </Link>
-                        )
-                    })
-                }
-            </div>}
+                        );
+                    })}
+                </div>
+            )}
+
+            {/* NOTE SECTION (unchanged logic, cleaner style) */}
             {pathname === "/rider-registration" && (
                 <motion.div
-                    initial={{
-                        opacity: 0,
-                        y: 20,
-                    }}
-                    animate={{
-                        opacity: 1,
-                        y: 0,
-                    }}
-                    transition={{
-                        duration: 0.5,
-                    }}
-                    className="bg-primary/10 p-5 rounded-lg w-full text-primary italic mt-3">
-                    <h2 className="text-lg font-semibold">{t("note")} : </h2>
-                    <p className="text-sm">
-                        - {t("you_man_register_using_rider_form")}
-                    </p>
-                    <p className="text-sm">
-                        - {t("if_fleet_manager_available")}
-                    </p>
-                    <p className="text-sm">
-                        - {t("if_fleet_manager_is_not_available")}
-                    </p>
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4 }}
+                    className="mt-6 w-full max-w-3xl bg-[#DC3173]/10 border border-[#DC3173]/20 rounded-xl p-4 text-[#DC3173]"
+                >
+                    <h2 className="text-sm font-semibold mb-1">
+                        {t("note")}:
+                    </h2>
+                    <ul className="text-sm space-y-1 list-disc list-inside">
+                        <li>{t("you_man_register_using_rider_form")}</li>
+                        <li>{t("if_fleet_manager_available")}</li>
+                        <li>{t("if_fleet_manager_is_not_available")}</li>
+                    </ul>
                 </motion.div>
             )}
-            {
-                !go_back_action && (
-                    <div className="bg-primary/10 p-5 flex flex-col md:flex-row items-center justify-start gap-5 rounded-lg w-full font-semibold">
-                        <Button variant="default">
-                            <Link href="/rider-registration">
-                                Go to Home
-                            </Link>
-                        </Button>
-                    </div>
-                )
-            }
         </div>
     );
 };
