@@ -27,7 +27,7 @@ const SwitcherTabs = () => {
         pathname === "/status-check";
 
     return (
-        <div className="w-full flex flex-col items-center mt-1">
+        <div className="w-full flex flex-col items-center mt-14">
             {showTabs && (
                 <div className="relative flex gap-10 border-b border-gray-200">
                     {tabs.map((tab) => {
@@ -59,7 +59,7 @@ const SwitcherTabs = () => {
             )}
 
             {/* NOTE SECTION (unchanged logic, cleaner style) */}
-            {pathname === "/rider-registration" && (
+            {/* {pathname === "/rider-registration" && (
                 <motion.div
                     initial={{ opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -75,7 +75,7 @@ const SwitcherTabs = () => {
                         <li>{t("if_fleet_manager_is_not_available")}</li>
                     </ul>
                 </motion.div>
-            )}
+            )} */}
         </div>
     );
 };

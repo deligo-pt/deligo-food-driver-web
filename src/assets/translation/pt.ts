@@ -1,5 +1,10 @@
 export const pt = {
     // add delivery partner -> delivery partner form
+    create_an_account: "Criar uma conta",
+    enter_details_start_application: "Introduza os seus dados para iniciar a sua candidatura.",
+    email_address: "Endereço de email",
+    secure_password: "Palavra-passe segura",
+    continue: "Continuar",
     delivery_partner_registration: "Registo de parceiro de entrega",
     join_our_delivery_network: "Junte-se hoje à nossa rede de entregas",
     password: "Palavra-passe",
@@ -124,10 +129,17 @@ export const pt = {
     // switcher tabs
     rider_registration: "Formulário de Registo de Estafeta",
     status_check: "Verificação de status",
-    note: "Nota",
-    you_man_register_using_rider_form: "Você pode se cadastrar usando este formulário de registro de entregador.",
-    if_fleet_manager_available: "Se houver um Gerente de Frota disponível em sua região, você será adicionado sob a gestão desse Gerente de Frota.",
-    if_fleet_manager_is_not_available: "Se não houver um Gerente de Frota em sua região, você poderá trabalhar como freelancer pela Deligo para a entrega de produtos.",
+    // -> notes
+    join_our_delivery: "Junte-se hoje à nossa",
+    network_today: "rede de entregas",
+    become_a_part_of: "Torne-se parte da plataforma de logística que mais cresce. Defina o seu próprio horário e ganhe mais com a DeliGo.",
+    easy_registration: "Registo fácil",
+    complete_your_profile: "Complete o seu perfil em minutos com o nosso processo simplificado.",
+    smart_assignment: "Atribuição inteligente",
+    be_matched: "Seja associado a Gestores de Frotas ou trabalhe como freelancer na sua área.",
+
+    important_note: "NOTA IMPORTANTE",
+    if_fleet_manager_available: "Se houver um Gestor de Frotas disponível na sua área, será adicionado sob a sua gestão. Caso contrário, poderá trabalhar como freelancer independente.",
 
     // status-check
     check_account_status: "Verificar status da conta",
