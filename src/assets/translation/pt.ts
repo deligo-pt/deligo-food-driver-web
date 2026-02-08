@@ -115,6 +115,7 @@ export const pt = {
     upload_your_documents: "Carregar os seus documentos",
     vehicle_type_bicycle: "Se o seu tipo de veículo for Bicicleta ou E-Bike, não é necessário submeter a carta de condução.",
     vehicle_type_not_bicycle: "Se o seu tipo de veículo não for Bicicleta ou E-Bike, terá de submeter a carta de condução para maior segurança. Caso não a submeta, as autoridades não serão responsáveis por isso.",
+    my_photo: "Minha foto",
     id_proof_front: "Documento de identificação (frente)",
     id_proof_back: "Documento de identificação (verso)",
     driving_license_front: "Carta de condução (frente)",
