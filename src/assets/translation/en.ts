@@ -1,5 +1,10 @@
 export const en = {
     // add delivery partner -> delivery partner form
+    create_an_account: "Create an Account",
+    enter_details_start_application: "Enter your details to start your application.",
+    email_address: "Email Address",
+    secure_password: "Secure Password",
+    continue: "Continue",
     delivery_partner_registration: "Delivery Partner Registration",
     join_our_delivery_network: "Join our delivery network today",
     password: "Password",
@@ -109,6 +114,7 @@ export const en = {
     upload_your_documents: "Upload Your Documents",
     vehicle_type_bicycle: "If your vehicle type is Bicyle or E-Bike,then you don't have to submit Driving Licenses",
     vehicle_type_not_bicycle: "If your vehicle type is not Bicycle or E-Bike,then you have to submit Driving Licenses for further assurance. If you don't submit, the authorities will not be responsible for it.",
+    my_photo: "My Photo",
     id_proof_front: "ID Proof Front",
     id_proof_back: "ID Proof Back",
     driving_license_front: "Driving License Front",
@@ -121,13 +127,18 @@ export const en = {
     complete_submit: "Complete & Submit",
 
     // switcher tabs
-    rider_registration_form: "Rider Registration Form",
+    rider_registration: "Rider Registration",
     status_check: "Status Check",
     // -> notes
-    note: "Note",
-    you_man_register_using_rider_form: "You may register using this rider registration form.",
-    if_fleet_manager_available: "If a Fleet Manager is available in your area, you will be added under that Fleet Manager.",
-    if_fleet_manager_is_not_available: "If there is no Fleet Manager in your area, you will be able to work as freelancer under Deligo for product delivery.",
+    join_our_delivery: "Join our delivery",
+    network_today: "network today.",
+    become_a_part_of: "Become a part of the fastest growing logistics platform. Set your own schedule and earn more with DeliGo.",
+    easy_registration: "Easy Registration",
+    complete_your_profile: "Complete your profile in minutes with our streamlined process.",
+    smart_assignment: "Smart Assignment",
+    be_matched: "Be matched with Fleet Managers or work as a freelancer in your area.",
+    important_note: "IMPORTANT NOTE",
+    if_fleet_manager_available: "If a Fleet Manager is available in your area, you will be added under their management. Otherwise, you can work as an independent freelancer.",
 
     // status-check
     check_account_status: "Check Account Status",
