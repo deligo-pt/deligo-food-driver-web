@@ -35,13 +35,12 @@ type FilePreview = {
   isImage: boolean;
 };
 
-const OPTIONAL_DOCS: DocKey[] = ["activity", "insurancePolicy", "drivingLicenseFront", "drivingLicenseBack",];
+const OPTIONAL_DOCS: DocKey[] = ["activity", "insurancePolicy", "drivingLicenseFront", "drivingLicenseBack", "vehicleRegistration",];
 
 const REQUIRED_DOCS: DocKey[] = [
   "myPhoto",
   "idProofFront",
   "idProofBack",
-  "vehicleRegistration",
   "criminalRecordCertificate",
 ];
 
