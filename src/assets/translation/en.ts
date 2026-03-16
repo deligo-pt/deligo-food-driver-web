@@ -112,8 +112,8 @@ export const en = {
 
     // -> upload documents
     upload_your_documents: "Upload Your Documents",
-    vehicle_type_bicycle: "If your vehicle type is Bicyle or E-Bike,then you don't have to submit Driving Licenses",
-    vehicle_type_not_bicycle: "If your vehicle type is not Bicycle or E-Bike,then you have to submit Driving Licenses for further assurance. If you don't submit, the authorities will not be responsible for it.",
+    vehicle_type_bicycle: "If your vehicle type is Bicyle or E-Bike,then you don't have to submit Driving Licenses and Vehicle Registation documents",
+    vehicle_type_not_bicycle: "If your vehicle type is not Bicycle or E-Bike,then you have to submit Driving Licenses and Vehicle Registration documents for further assurance. If you don't submit, the authorities will not be responsible for it.",
     my_photo: "My Photo",
     id_proof_front: "ID Proof Front",
     id_proof_back: "ID Proof Back",
