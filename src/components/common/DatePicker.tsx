@@ -28,9 +28,28 @@ function parseDDMMYYYY(input: string): Date | undefined {
     return isNaN(date.getTime()) ? undefined : date;
 }
 
-// Convert to ISO yyyy-mm-dd format
-function toISO(date: Date) {
-    return date.toISOString().split("T")[0];
+/**
+ * FIXED: Bypasses .toISOString() timezone shift.
+ * Extracts the exact local dates chosen by the user.
+ */
+function toLocalISOString(date: Date) {
+    const yyyy = date.getFullYear();
+    const mm = String(date.getMonth() + 1).padStart(2, "0");
+    const dd = String(date.getDate()).padStart(2, "0");
+    return `${yyyy}-${mm}-${dd}`;
+}
+
+/**
+ * FIXED: Safe construction of incoming "YYYY-MM-DD" values
+ * to avoid midnight timezone shifting.
+ */
+function parseLocalISOString(isoString: string): Date | undefined {
+    if (!isoString) return undefined;
+    const parts = isoString.split("-");
+    if (parts.length !== 3) return undefined;
+    const [yyyy, mm, dd] = parts.map(Number);
+    const date = new Date(yyyy, mm - 1, dd);
+    return isNaN(date.getTime()) ? undefined : date;
 }
 
 export function DatePicker({
@@ -41,18 +60,27 @@ export function DatePicker({
     disabled
 }: {
     inputId: string;
-    value: string; // expecting ISO string "yyyy-mm-dd"
+    value: string;
     onChange: (value: string) => void;
     isInvalid: boolean;
     disabled?: boolean;
 }) {
-    const isoDate = value ? new Date(value) : undefined;
+    // FIXED: Use local string parser instead of constructor to avoid timezone drift
+    const isoDate = React.useMemo(() => parseLocalISOString(value), [value]);
     const displayValue = isoDate ? formatToDDMMYYYY(isoDate) : "";
 
     const [open, setOpen] = React.useState(false);
-    const [month, setMonth] = React.useState<Date>(isoDate || new Date());
 
-    // Year range
+    // Manage calendar dynamic position focusing safely
+    const [month, setMonth] = React.useState<Date>(new Date());
+
+    React.useEffect(() => {
+        if (isoDate) {
+            setMonth(isoDate);
+        }
+    }, [isoDate]);
+
+    // Year range configuration
     const years = Array.from({ length: 130 }, (_, i) => 1900 + i);
 
     return (
@@ -74,7 +102,7 @@ export function DatePicker({
                     const inputValue = e.target.value;
                     const parsed = parseDDMMYYYY(inputValue);
                     if (parsed) {
-                        onChange(toISO(parsed));
+                        onChange(toLocalISOString(parsed));
                         setMonth(parsed);
                     }
                 }}
@@ -142,7 +170,8 @@ export function DatePicker({
                         onSelect={(selectedDate) => {
                             if (disabled || !selectedDate) return;
 
-                            onChange(toISO(selectedDate));
+                            // FIXED: Use updated local formatting handler
+                            onChange(toLocalISOString(selectedDate));
                             setOpen(false);
                         }}
                     />
