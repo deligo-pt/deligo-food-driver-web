@@ -19,7 +19,7 @@ export const pt = {
     step: "Passo",
     previous: "Anterior",
     personal_information: "Informação pessoal",
-    legal_status: "Estado legal",
+    legal_status: "Estado Jurídico",
     payment_details: "Detalhes de pagamento",
     vehicle_information: "Informação do veículo",
     background_check: "Verificação de antecedentes",
@@ -129,7 +129,7 @@ export const pt = {
 
     // switcher tabs
     rider_registration: "Formulário de Registo de Estafeta",
-    status_check: "Verificação de status",
+    status_check: "Verificação de estado",
     // -> notes
     join_our_delivery: "Junte-se hoje à nossa",
     network_today: "rede de entregas",
@@ -140,7 +140,7 @@ export const pt = {
     be_matched: "Seja associado a Gestores de Frotas ou trabalhe como freelancer na sua área.",
 
     important_note: "NOTA IMPORTANTE",
-    if_fleet_manager_available: "Se houver um Gestor de Frotas disponível na sua área, será adicionado sob a sua gestão. Caso contrário, poderá trabalhar como freelancer independente.",
+    if_fleet_manager_available: "Se houver um Gestor de Frotas disponível na sua área, será adicionado sob a sua gestão.",
 
     // status-check
     check_account_status: "Verificar status da conta",

@@ -53,7 +53,7 @@ export function DatePicker({
     const [month, setMonth] = React.useState<Date>(isoDate || new Date());
 
     // Year range
-    const years = Array.from({ length: 80 }, (_, i) => 1980 + i);
+    const years = Array.from({ length: 130 }, (_, i) => 1900 + i);
 
     return (
         <div className="relative flex gap-2">
