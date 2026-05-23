@@ -82,7 +82,7 @@ export function PersonalInfoForm({ onNext, id }: IProps) {
           dateOfBirth: new Date(values.dateOfBirth).toISOString(),
           nationality: values.nationality,
           gender: values.gender,
-          nifNumber: values.nifNumber,
+          NIF: values.nifNumber,
           passportNumber: values.passportNumber,
         },
         address: {
@@ -100,6 +100,8 @@ export function PersonalInfoForm({ onNext, id }: IProps) {
           id: toastId,
         });
         onNext();
+      } else {
+        toast.error(result?.message, { id: toastId })
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {

@@ -42,6 +42,7 @@ import { jwtDecode } from "jwt-decode";
 import { getDeliveryPartnerDetails } from "@/services/deliveryPartner/deliveryPartner";
 import { TDeliveryPartner } from "@/types/delivery-partner.type";
 import { TResponse } from "@/types";
+import { getDeviceInfo } from "@/utils/getDeviceInfo";
 
 type FormData = z.infer<typeof deliveryPartnerValidation>;
 
@@ -81,6 +82,7 @@ const StatusItem = ({
 export function StatusCheckForm() {
     const { t } = useTranslation();
     const [step, setStep] = useState(0);
+    const deviceInfo = getDeviceInfo();
     const [partner, setPartner] = useState<TDeliveryPartner | null>(null);
     const [showPassword, setShowPassword] = useState(false);
     const form = useForm<FormData>({
@@ -94,10 +96,15 @@ export function StatusCheckForm() {
     const onSubmit = async (data: FormData) => {
         const toastId = toast.loading("Checking status...");
 
+        const deviceDetails = await deviceInfo;
+        const payload = {
+            ...data,
+            deviceDetails
+        };
         try {
             const result = (await postData(
                 "/auth/login",
-                data,
+                payload,
             )) as unknown as TResponse<any>;
 
             if (result.success) {

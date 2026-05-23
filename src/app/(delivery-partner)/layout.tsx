@@ -9,7 +9,7 @@ const DeliveryPartnerLayout = ({
 }>) => {
     return (
         <div className='bg-gray-50'>
-            <div className="w-[95%] lg:w-5xl mx-auto space-y-3">
+            <div className="w-[95%] lg:w-6xl mx-auto space-y-3">
                 <Navbar />
                 <SwitcherTabs />
                 <div className="min-h-dvh">{children}</div>
