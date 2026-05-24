@@ -58,6 +58,9 @@ export function DeliveryPartnerForm() {
                 router.push(`/verify-otp?email=${result.data.email}`);
             } else {
                 toast.error(result.message, { id: toastId });
+                if (result?.err?.statusCode === 409) {
+                    router.push('/status-check')
+                }
             }
         } catch (err: any) {
             toast.error("Something went wrong", { id: toastId });
