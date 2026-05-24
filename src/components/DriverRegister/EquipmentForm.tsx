@@ -18,7 +18,8 @@ import {
 } from "@/components/ui/select";
 import { useTranslation } from "@/hooks/use-translation";
 import { cn } from "@/lib/utils";
-import { getDeliveryPartnerDetails, updatePartnerInformation } from "@/services/deliveryPartner/deliveryPartner";
+import { updatePartnerInformation } from "@/services/deliveryPartner/deliveryPartner";
+import { TDeliveryPartner } from "@/types/delivery-partner.type";
 import { equipmentValidation } from "@/validations/edit-delivery-partner/equipment.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
@@ -41,10 +42,10 @@ type FormData = z.infer<typeof equipmentValidation>;
 
 interface IProps {
   onNext: () => void;
-  id: string;
+  partner: TDeliveryPartner;
 }
 
-export function EquipmentForm({ onNext, id }: IProps) {
+export function EquipmentForm({ onNext, partner }: IProps) {
   const { t } = useTranslation();
   const [zone, setZone] = useState("");
   const form = useForm<FormData>({
@@ -111,7 +112,7 @@ export function EquipmentForm({ onNext, id }: IProps) {
         },
       };
 
-      const result = await updatePartnerInformation(id as string, payload);
+      const result = await updatePartnerInformation(partner?.userId as string, payload);
 
       if (result.success) {
         toast.success("Delivery Partner details updated successfully!", {
@@ -133,49 +134,37 @@ export function EquipmentForm({ onNext, id }: IProps) {
     }
   };
 
-  const getPartnerData = async () => {
-    try {
-      const result = await getDeliveryPartnerDetails(id as string);
-
-      if (result.success) {
-        form.setValue(
-          "preferredZones",
-          result?.data?.workPreferences?.preferredZones || [],
-        );
-        form.setValue(
-          "preferredHours",
-          result?.data?.workPreferences?.preferredHours || [],
-        );
-        form.setValue(
-          "isothermalBag",
-          result?.data?.workPreferences?.hasEquipment?.isothermalBag || false,
-        );
-        form.setValue(
-          "helmet",
-          result?.data?.workPreferences?.hasEquipment?.helmet || false,
-        );
-        form.setValue(
-          "powerBank",
-          result?.data?.workPreferences?.hasEquipment?.powerBank || false,
-        );
-        form.setValue(
-          "workedWithOtherPlatform",
-          result?.data?.workPreferences?.workedWithOtherPlatform || false,
-        );
-        form.setValue(
-          "otherPlatformName",
-          result?.data?.workPreferences?.otherPlatformName || "",
-        );
-      }
-    } catch (error) {
-      console.log("Error fetching delivery partner data:", error);
-    }
-  };
-
   useEffect(() => {
-    (() => getPartnerData())();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (!partner?._id) return;
+
+    form.reset({
+      preferredZones:
+        partner?.workPreferences?.preferredZones || [],
+
+      preferredHours:
+        partner?.workPreferences?.preferredHours || [],
+
+      isothermalBag:
+        partner?.workPreferences?.hasEquipment
+          ?.isothermalBag || false,
+
+      helmet:
+        partner?.workPreferences?.hasEquipment
+          ?.helmet || false,
+
+      powerBank:
+        partner?.workPreferences?.hasEquipment
+          ?.powerBank || false,
+
+      workedWithOtherPlatform:
+        partner?.workPreferences
+          ?.workedWithOtherPlatform || false,
+
+      otherPlatformName:
+        partner?.workPreferences
+          ?.otherPlatformName || "",
+    });
+  }, [partner]);
 
   return (
     <div>
@@ -282,7 +271,7 @@ export function EquipmentForm({ onNext, id }: IProps) {
                   <FormControl>
                     <Select
                       onValueChange={(value) => field.onChange([value])}
-                      value={field.value?.[0]}
+                      value={field.value?.[0] || partner?.workPreferences?.preferredHours?.[0] || undefined}
                     >
                       <SelectTrigger
                         className={cn(

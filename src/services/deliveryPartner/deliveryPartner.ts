@@ -2,11 +2,16 @@
 "use server";
 
 import { serverFetch } from "@/lib/serverFetch";
+import { revalidateTag } from "next/cache";
 
 
 export const getDeliveryPartnerDetails = async (id?: string) => {
   try {
-    const res = await serverFetch.get(`/delivery-partners/${id}`);
+    const res = await serverFetch.get(`/delivery-partners/${id}`, {
+      next: {
+        tags: ["delivery-partner"]
+      }
+    });
 
     const result = await res.json();
 
@@ -42,6 +47,10 @@ export const updatePartnerInformation = async (id: string, payload: any) => {
     },
     body: JSON.stringify(payload)
   });
+
+  if (res.ok) {
+    revalidateTag('delivery-partner', {})
+  }
 
   const result = await res.json();
 
