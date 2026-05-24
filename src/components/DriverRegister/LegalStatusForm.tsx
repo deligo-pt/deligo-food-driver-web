@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/select";
 import { useTranslation } from "@/hooks/use-translation";
 import { cn } from "@/lib/utils";
-import { getDeliveryPartnerDetails, updatePartnerInformation } from "@/services/deliveryPartner/deliveryPartner";
+import { updatePartnerInformation } from "@/services/deliveryPartner/deliveryPartner";
 import { legalStatusValidation } from "@/validations/edit-delivery-partner/legal-status.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
@@ -33,10 +33,11 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
 import { DatePicker } from "../common/DatePicker";
+import { TDeliveryPartner } from "@/types/delivery-partner.type";
 
 interface IProps {
   onNext: () => void;
-  id: string;
+  partner: TDeliveryPartner
 }
 
 type FormData = z.infer<typeof legalStatusValidation>;
@@ -48,7 +49,7 @@ const permitTypes = [
   "Other",
 ];
 
-export function LegalStatusForm({ onNext, id }: IProps) {
+export function LegalStatusForm({ onNext, partner }: IProps) {
   const { t } = useTranslation();
   const form = useForm<FormData>({
     resolver: zodResolver(legalStatusValidation),
@@ -73,7 +74,7 @@ export function LegalStatusForm({ onNext, id }: IProps) {
         },
       };
 
-      const result = await updatePartnerInformation(id as string, payload);
+      const result = await updatePartnerInformation(partner?.userId as string, payload);
 
       if (result.success) {
         toast.success("Delivery Partner details updated successfully!", {
@@ -94,33 +95,32 @@ export function LegalStatusForm({ onNext, id }: IProps) {
     }
   };
 
-  const getPartnerData = async () => {
-    try {
-      const result = await getDeliveryPartnerDetails(id as string);
-      console.log("legal result", result);
-      if (result?._id) {
-        form.setValue(
-          "residencePermitType",
-          result?.legalStatus?.residencePermitType || "",
-        );
-        form.setValue(
-          "residencePermitNumber",
-          result?.legalStatus?.residencePermitNumber || "",
-        );
-        form.setValue(
-          "residencePermitExpiry",
-          (result?.legalStatus
-            ?.residencePermitExpiry as unknown as string) || "",
-        );
-      }
-    } catch (error) {
-      console.log("Error fetching delivery partner data:", error);
-    }
-  };
-
   useEffect(() => {
-    (() => getPartnerData())();
-  }, []);
+    const getPartnerData = async () => {
+      try {
+        if (partner?._id) {
+          form.setValue(
+            "residencePermitType",
+            partner?.legalStatus?.residencePermitType?.trim() || "",
+          );
+          form.setValue(
+            "residencePermitNumber",
+            partner?.legalStatus?.residencePermitNumber || "",
+          );
+          form.setValue(
+            "residencePermitExpiry",
+            (partner?.legalStatus
+              ?.residencePermitExpiry as unknown as string) || "",
+          );
+        }
+      } catch (error) {
+        console.log("Error fetching delivery partner data:", error);
+      }
+    };
+
+    getPartnerData();
+
+  }, [partner, form]);
 
   return (
     <div>
@@ -158,7 +158,10 @@ export function LegalStatusForm({ onNext, id }: IProps) {
                     </div>
                   </FormLabel>
                   <FormControl>
-                    <Select onValueChange={field.onChange} value={field.value}>
+                    <Select
+                      onValueChange={field.onChange}
+                      value={field.value || partner?.legalStatus?.residencePermitType || undefined}
+                    >
                       <SelectTrigger
                         className={cn(
                           "w-full p-3 border rounded-lg focus:ring-2 focus:ring-[#DC3173] focus:border-[#DC3173] outline-none transition-all",

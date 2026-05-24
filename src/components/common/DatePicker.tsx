@@ -23,32 +23,45 @@ function formatToDDMMYYYY(date: Date | undefined) {
 function parseDDMMYYYY(input: string): Date | undefined {
     const parts = input.split("/");
     if (parts.length !== 3) return undefined;
+
     const [dd, mm, yyyy] = parts.map(Number);
+
     const date = new Date(yyyy, mm - 1, dd);
+
     return isNaN(date.getTime()) ? undefined : date;
 }
 
 /**
- * FIXED: Bypasses .toISOString() timezone shift.
- * Extracts the exact local dates chosen by the user.
+ * Convert Date -> YYYY-MM-DD
  */
 function toLocalISOString(date: Date) {
     const yyyy = date.getFullYear();
     const mm = String(date.getMonth() + 1).padStart(2, "0");
     const dd = String(date.getDate()).padStart(2, "0");
+
     return `${yyyy}-${mm}-${dd}`;
 }
 
 /**
- * FIXED: Safe construction of incoming "YYYY-MM-DD" values
- * to avoid midnight timezone shifting.
+ * FIXED:
+ * Handles:
+ * 2026-05-19
+ * 2026-05-19T00:00:00.000+00:00
  */
-function parseLocalISOString(isoString: string): Date | undefined {
-    if (!isoString) return undefined;
-    const parts = isoString.split("-");
+function parseLocalISOString(value: string): Date | undefined {
+    if (!value) return undefined;
+
+    // Extract only YYYY-MM-DD
+    const dateOnly = value.slice(0, 10);
+
+    const parts = dateOnly.split("-");
+
     if (parts.length !== 3) return undefined;
+
     const [yyyy, mm, dd] = parts.map(Number);
+
     const date = new Date(yyyy, mm - 1, dd);
+
     return isNaN(date.getTime()) ? undefined : date;
 }
 
@@ -57,7 +70,7 @@ export function DatePicker({
     value,
     onChange,
     isInvalid,
-    disabled
+    disabled,
 }: {
     inputId: string;
     value: string;
@@ -65,14 +78,21 @@ export function DatePicker({
     isInvalid: boolean;
     disabled?: boolean;
 }) {
-    // FIXED: Use local string parser instead of constructor to avoid timezone drift
-    const isoDate = React.useMemo(() => parseLocalISOString(value), [value]);
-    const displayValue = isoDate ? formatToDDMMYYYY(isoDate) : "";
+    // FIXED
+    const isoDate = React.useMemo(
+        () => parseLocalISOString(value),
+        [value]
+    );
+
+    const displayValue = isoDate
+        ? formatToDDMMYYYY(isoDate)
+        : "";
 
     const [open, setOpen] = React.useState(false);
 
-    // Manage calendar dynamic position focusing safely
-    const [month, setMonth] = React.useState<Date>(new Date());
+    const [month, setMonth] = React.useState<Date>(
+        isoDate || new Date()
+    );
 
     React.useEffect(() => {
         if (isoDate) {
@@ -80,8 +100,10 @@ export function DatePicker({
         }
     }, [isoDate]);
 
-    // Year range configuration
-    const years = Array.from({ length: 130 }, (_, i) => 1900 + i);
+    const years = Array.from(
+        { length: 130 },
+        (_, i) => 1900 + i
+    );
 
     return (
         <div className="relative flex gap-2">
@@ -100,7 +122,9 @@ export function DatePicker({
                     if (disabled) return;
 
                     const inputValue = e.target.value;
+
                     const parsed = parseDDMMYYYY(inputValue);
+
                     if (parsed) {
                         onChange(toLocalISOString(parsed));
                         setMonth(parsed);
@@ -128,7 +152,9 @@ export function DatePicker({
                         className="absolute top-1/2 right-2 size-6 -translate-y-1/2"
                     >
                         <CalendarIcon className="size-3.5" />
-                        <span className="sr-only">Select date</span>
+                        <span className="sr-only">
+                            Select date
+                        </span>
                     </Button>
                 </PopoverTrigger>
 
@@ -138,15 +164,22 @@ export function DatePicker({
                     alignOffset={-8}
                     sideOffset={10}
                 >
-                    {/* YEAR SELECTOR */}
                     <div className="flex items-center justify-between px-3 py-2 border-b bg-muted">
                         <select
                             disabled={disabled}
                             className="bg-transparent text-sm"
                             value={month.getFullYear()}
                             onChange={(e) => {
-                                const selectedYear = Number(e.target.value);
-                                const newDate = new Date(selectedYear, month.getMonth(), 1);
+                                const selectedYear = Number(
+                                    e.target.value
+                                );
+
+                                const newDate = new Date(
+                                    selectedYear,
+                                    month.getMonth(),
+                                    1
+                                );
+
                                 setMonth(newDate);
                             }}
                         >
@@ -158,7 +191,9 @@ export function DatePicker({
                         </select>
 
                         <span className="font-semibold text-sm">
-                            {month.toLocaleString("default", { month: "long" })}
+                            {month.toLocaleString("default", {
+                                month: "long",
+                            })}
                         </span>
                     </div>
 
@@ -168,10 +203,18 @@ export function DatePicker({
                         month={month}
                         onMonthChange={setMonth}
                         onSelect={(selectedDate) => {
-                            if (disabled || !selectedDate) return;
+                            if (
+                                disabled ||
+                                !selectedDate
+                            )
+                                return;
 
-                            // FIXED: Use updated local formatting handler
-                            onChange(toLocalISOString(selectedDate));
+                            onChange(
+                                toLocalISOString(selectedDate)
+                            );
+
+                            setMonth(selectedDate);
+
                             setOpen(false);
                         }}
                     />

@@ -21,8 +21,13 @@ import { BackgroundCheckForm } from "./BackgroundCheckForm";
 import { EquipmentForm } from "./EquipmentForm";
 import Documents from "./Documents";
 import { AnimatePresence, motion } from "framer-motion";
+import { TDeliveryPartner } from "@/types/delivery-partner.type";
 
-const EditDeliveryPartner = ({ id }: { id: string }) => {
+interface IProps {
+    partnerDetails: TDeliveryPartner;
+}
+
+const EditDeliveryPartner = ({ partnerDetails }: IProps) => {
     const { t } = useTranslation();
     const [currentStep, setCurrentStep] = useState(0);
 
@@ -81,19 +86,19 @@ const EditDeliveryPartner = ({ id }: { id: string }) => {
     const renderStep = () => {
         switch (currentStep) {
             case 0:
-                return <PersonalInfoForm onNext={handleNext} id={id} />;
+                return <PersonalInfoForm onNext={handleNext} partner={partnerDetails} />;
             case 1:
-                return <LegalStatusForm onNext={handleNext} id={id} />;
+                return <LegalStatusForm onNext={handleNext} partner={partnerDetails} />;
             case 2:
-                return <PaymentDetailsForm onNext={handleNext} id={id} />;
+                return <PaymentDetailsForm onNext={handleNext} partner={partnerDetails} />;
             case 3:
-                return <VehicleInfoForm onNext={handleNext} id={id} />;
+                return <VehicleInfoForm onNext={handleNext} partner={partnerDetails} />;
             case 4:
-                return <BackgroundCheckForm onNext={handleNext} id={id} />;
+                return <BackgroundCheckForm onNext={handleNext} partner={partnerDetails} />;
             case 5:
-                return <EquipmentForm onNext={handleNext} id={id} />;
+                return <EquipmentForm onNext={handleNext} partner={partnerDetails} />;
             case 6:
-                return <Documents id={id} />;
+                return <Documents partner={partnerDetails} />;
             default:
                 return null;
         }

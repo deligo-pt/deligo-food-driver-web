@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/select";
 import { useTranslation } from "@/hooks/use-translation";
 import { cn } from "@/lib/utils";
-import { getDeliveryPartnerDetails, updatePartnerInformation } from "@/services/deliveryPartner/deliveryPartner";
+import { updatePartnerInformation } from "@/services/deliveryPartner/deliveryPartner";
 import { personalInfoValidation } from "@/validations/edit-delivery-partner/personal-info.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
@@ -37,15 +37,16 @@ import { PhoneInput } from "react-international-phone";
 import { toast } from "sonner";
 import { z } from "zod";
 import { DatePicker } from "../common/DatePicker";
+import { TDeliveryPartner } from "@/types/delivery-partner.type";
 
 type FormData = z.infer<typeof personalInfoValidation>;
 
 interface IProps {
   onNext: () => void;
-  id: string;
+  partner: TDeliveryPartner
 }
 
-export function PersonalInfoForm({ onNext, id }: IProps) {
+export function PersonalInfoForm({ onNext, partner }: IProps) {
   const { t } = useTranslation();
   const form = useForm<FormData>({
     resolver: zodResolver(personalInfoValidation),
@@ -92,7 +93,7 @@ export function PersonalInfoForm({ onNext, id }: IProps) {
           country: values.country,
         },
       };
-      const result = await updatePartnerInformation(id as string, payload);
+      const result = await updatePartnerInformation(partner?.userId as string, payload);
 
       if (result.success) {
         toast.success("Delivery Partner details updated successfully!", {
@@ -115,40 +116,38 @@ export function PersonalInfoForm({ onNext, id }: IProps) {
     }
   };
 
-  const getPartnerData = async () => {
-    try {
-      const partner = await getDeliveryPartnerDetails(id as string);
-
-      if (partner?._id) {
-
-        form.setValue("firstName", partner?.name?.firstName || "");
-        form.setValue("lastName", partner?.name?.lastName || "");
-        form.setValue("phoneNumber", partner?.contactNumber || "");
-        form.setValue(
-          "dateOfBirth",
-          (partner?.personalInfo?.dateOfBirth as unknown as string) || "",
-        );
-        form.setValue("nationality", partner?.personalInfo?.nationality || "");
-        form.setValue("gender", partner?.personalInfo?.gender || "MALE");
-        form.setValue("nifNumber", partner?.personalInfo?.NIF || "");
-        form.setValue(
-          "passportNumber",
-          partner?.personalInfo?.passportNumber || "",
-        );
-        form.setValue("street", partner?.address?.street || "");
-        form.setValue("city", partner?.address?.city || "");
-        form.setValue("postalCode", partner?.address?.postalCode || "");
-        form.setValue("state", partner?.address?.state || "");
-        form.setValue("country", partner?.address?.country || "");
-      }
-    } catch (error) {
-      console.log("Error fetching delivery partner data:", error);
-    }
-  };
-
   useEffect(() => {
-    (() => getPartnerData())();
-  }, []);
+    const getPartnerData = async () => {
+      try {
+        if (partner?._id) {
+
+          form.setValue("firstName", partner?.name?.firstName || "");
+          form.setValue("lastName", partner?.name?.lastName || "");
+          form.setValue("phoneNumber", partner?.contactNumber || "");
+          form.setValue(
+            "dateOfBirth",
+            (partner?.personalInfo?.dateOfBirth as unknown as string) || "",
+          );
+          form.setValue("nationality", partner?.personalInfo?.nationality || "");
+          form.setValue("gender", partner?.personalInfo?.gender || "MALE");
+          form.setValue("nifNumber", partner?.personalInfo?.NIF || "");
+          form.setValue(
+            "passportNumber",
+            partner?.personalInfo?.passportNumber || "",
+          );
+          form.setValue("street", partner?.address?.street || "");
+          form.setValue("city", partner?.address?.city || "");
+          form.setValue("postalCode", partner?.address?.postalCode || "");
+          form.setValue("state", partner?.address?.state || "");
+          form.setValue("country", partner?.address?.country || "");
+        }
+      } catch (error) {
+        console.log("Error fetching delivery partner data:", error);
+      }
+    };
+
+    getPartnerData();
+  }, [partner, form]);
 
   useEffect(() => {
     const currentPhone = form.getValues("phoneNumber");
