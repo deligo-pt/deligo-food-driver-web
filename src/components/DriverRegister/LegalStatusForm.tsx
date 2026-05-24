@@ -97,19 +97,19 @@ export function LegalStatusForm({ onNext, id }: IProps) {
   const getPartnerData = async () => {
     try {
       const result = await getDeliveryPartnerDetails(id as string);
-
-      if (result.success) {
+      console.log("legal result", result);
+      if (result?._id) {
         form.setValue(
           "residencePermitType",
-          result?.data?.legalStatus?.residencePermitType || "",
+          result?.legalStatus?.residencePermitType || "",
         );
         form.setValue(
           "residencePermitNumber",
-          result?.data?.legalStatus?.residencePermitNumber || "",
+          result?.legalStatus?.residencePermitNumber || "",
         );
         form.setValue(
           "residencePermitExpiry",
-          (result?.data?.legalStatus
+          (result?.legalStatus
             ?.residencePermitExpiry as unknown as string) || "",
         );
       }
@@ -120,7 +120,6 @@ export function LegalStatusForm({ onNext, id }: IProps) {
 
   useEffect(() => {
     (() => getPartnerData())();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

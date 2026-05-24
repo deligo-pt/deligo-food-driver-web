@@ -1,4 +1,5 @@
 import EditDeliveryPartner from "@/components/DriverRegister/EditDeliveryPartner";
+import { getDeliveryPartnerDetails } from "@/services/deliveryPartner/deliveryPartner";
 
 
 interface IProps {
@@ -9,10 +10,11 @@ interface IProps {
 
 const EditDeliveryPartnerPage = async ({ params }: IProps) => {
     const { id } = await params;
+    const partnerDetails = await getDeliveryPartnerDetails(id);
 
     return (
         <div>
-            <EditDeliveryPartner id={id} />
+            <EditDeliveryPartner partnerDetails={partnerDetails || {}} />
         </div>
     );
 };
