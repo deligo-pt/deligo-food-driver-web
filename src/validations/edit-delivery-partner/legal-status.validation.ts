@@ -18,5 +18,5 @@ export const legalStatusValidation = z.object({
     .refine((value) => {
       return Date.parse(value);
     }, "Invalid date format")
-    .nonempty("Date of birth is required"),
+    .nonempty("Residence Expiry is required"),
 });

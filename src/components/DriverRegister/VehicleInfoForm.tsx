@@ -11,7 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useTranslation } from "@/hooks/use-translation";
-import { getDeliveryPartnerDetails, updatePartnerInformation } from "@/services/deliveryPartner/deliveryPartner";
+import { updatePartnerInformation } from "@/services/deliveryPartner/deliveryPartner";
 import { vehicleInfoValidation } from "@/validations/edit-delivery-partner/vehicle-info.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
@@ -28,15 +28,16 @@ import { useForm, useWatch } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import { DatePicker } from "../common/DatePicker";
+import { TDeliveryPartner } from "@/types/delivery-partner.type";
 
 interface IProps {
   onNext: () => void;
-  id: string;
+  partner: TDeliveryPartner;
 }
 
 type FormData = z.infer<typeof vehicleInfoValidation>;
 
-export function VehicleInfoForm({ onNext, id }: IProps) {
+export function VehicleInfoForm({ onNext, partner }: IProps) {
   const { t } = useTranslation();
   const form = useForm<FormData>({
     resolver: zodResolver(vehicleInfoValidation),
@@ -81,7 +82,7 @@ export function VehicleInfoForm({ onNext, id }: IProps) {
             },
       };
 
-      const result = await updatePartnerInformation(id as string, payload);
+      const result = await updatePartnerInformation(partner?.userId as string, payload);
 
       if (result.success) {
         toast.success("Delivery Partner details updated successfully!", {
@@ -137,49 +138,47 @@ export function VehicleInfoForm({ onNext, id }: IProps) {
     },
   ];
 
-  const getPartnerData = async () => {
-    try {
-      const result = await getDeliveryPartnerDetails(id as string);
-
-      if (result.success) {
-        form.setValue(
-          "vehicleType",
-          result?.data?.vehicleInfo?.vehicleType || "MOTORBIKE",
-        );
-        form.setValue("brand", result?.data?.vehicleInfo?.brand || "");
-        form.setValue("model", result?.data?.vehicleInfo?.model || "");
-        form.setValue(
-          "licensePlate",
-          result?.data?.vehicleInfo?.licensePlate || "",
-        );
-        form.setValue(
-          "drivingLicenseNumber",
-          result?.data?.vehicleInfo?.drivingLicenseNumber || "",
-        );
-        form.setValue(
-          "drivingLicenseExpiry",
-          (result?.data?.vehicleInfo
-            ?.drivingLicenseExpiry as unknown as string) || "",
-        );
-        form.setValue(
-          "insurancePolicyNumber",
-          result?.data?.vehicleInfo?.insurancePolicyNumber || "",
-        );
-        form.setValue(
-          "insuranceExpiry",
-          (result?.data?.vehicleInfo?.insuranceExpiry as unknown as string) ||
-          "",
-        );
-      }
-    } catch (error) {
-      console.log("Error fetching delivery partner data:", error);
-    }
-  };
-
   useEffect(() => {
-    (() => getPartnerData())();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    const getPartnerData = async () => {
+      try {
+        if (partner?._id) {
+          form.setValue(
+            "vehicleType",
+            partner?.vehicleInfo?.vehicleType || "MOTORBIKE",
+          );
+          form.setValue("brand", partner?.vehicleInfo?.brand || "");
+          form.setValue("model", partner?.vehicleInfo?.model || "");
+          form.setValue(
+            "licensePlate",
+            partner?.vehicleInfo?.licensePlate || "",
+          );
+          form.setValue(
+            "drivingLicenseNumber",
+            partner?.vehicleInfo?.drivingLicenseNumber || "",
+          );
+          form.setValue(
+            "drivingLicenseExpiry",
+            (partner?.vehicleInfo
+              ?.drivingLicenseExpiry as unknown as string) || "",
+          );
+          form.setValue(
+            "insurancePolicyNumber",
+            partner?.vehicleInfo?.insurancePolicyNumber || "",
+          );
+          form.setValue(
+            "insuranceExpiry",
+            (partner?.vehicleInfo?.insuranceExpiry as unknown as string) ||
+            "",
+          );
+        }
+      } catch (error) {
+        console.log("Error fetching delivery partner data:", error);
+      }
+    };
+
+    getPartnerData();
+
+  }, [partner, form]);
 
   return (
     <div>

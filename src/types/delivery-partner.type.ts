@@ -122,6 +122,7 @@ export type TDeliveryPartner = {
   criminalRecord?: {
     certificate?: boolean;
     issueDate?: Date;
+    expiryDate?: Date;
   };
 
   // -------------------------------------------------

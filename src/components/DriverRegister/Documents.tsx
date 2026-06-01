@@ -16,7 +16,8 @@ import { CardTitle } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useTranslation } from "@/hooks/use-translation";
-import { getDeliveryPartnerDetails, submitForApproval } from "@/services/deliveryPartner/deliveryPartner";
+import { submitForApproval } from "@/services/deliveryPartner/deliveryPartner";
+import { TDeliveryPartner } from "@/types/delivery-partner.type";
 
 type DocKey =
   | "myPhoto"
@@ -44,7 +45,7 @@ const REQUIRED_DOCS: DocKey[] = [
   "criminalRecordCertificate",
 ];
 
-export default function Documents({ id }: { id: string }) {
+export default function Documents({ partner }: { partner: TDeliveryPartner }) {
   const { t } = useTranslation();
 
   const [previews, setPreviews] = useState<Record<DocKey, FilePreview | null>>({
@@ -150,7 +151,7 @@ export default function Documents({ id }: { id: string }) {
       );
 
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/delivery-partners/${id}/docImage`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/delivery-partners/${partner?.userId}/docImage`,
         {
           method: "PATCH",
           body: formData,
@@ -199,42 +200,6 @@ export default function Documents({ id }: { id: string }) {
     }
   };
 
-  const fetchExistingDocs = async () => {
-    try {
-      const result = await getDeliveryPartnerDetails(id as string);
-
-      if (result?.success) {
-        const docs = result?.data?.documents || {};
-
-        const newPreviews: Record<DocKey, FilePreview | null> = {
-          myPhoto: null,
-          idProofFront: null,
-          idProofBack: null,
-          drivingLicenseFront: null,
-          drivingLicenseBack: null,
-          vehicleRegistration: null,
-          criminalRecordCertificate: null,
-          activity: null,
-          insurancePolicy: null,
-        };
-
-        (Object.keys(docs) as DocKey[]).forEach((key) => {
-          const url = (docs as Record<DocKey, string>)[key] as string;
-          if (url) {
-            newPreviews[key] = {
-              file: null,
-              url: url || "",
-              isImage: /\.(jpg|jpeg|png|gif|webp)$/i.test(url),
-            };
-          }
-        });
-        setPreviews(newPreviews);
-      }
-    } catch (error) {
-      console.log("Failed to fetch existing docs", error);
-    }
-  };
-
   useEffect(() => {
     return () => {
       Object.values(previews).forEach((p) => {
@@ -245,12 +210,45 @@ export default function Documents({ id }: { id: string }) {
   }, []);
 
   useEffect(() => {
-    (() => fetchExistingDocs())();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    const fetchExistingDocs = async () => {
+      try {
+        if (partner?.documents) {
+          const docs = partner?.documents || {};
+
+          const newPreviews: Record<DocKey, FilePreview | null> = {
+            myPhoto: null,
+            idProofFront: null,
+            idProofBack: null,
+            drivingLicenseFront: null,
+            drivingLicenseBack: null,
+            vehicleRegistration: null,
+            criminalRecordCertificate: null,
+            activity: null,
+            insurancePolicy: null,
+          };
+
+          (Object.keys(docs) as DocKey[]).forEach((key) => {
+            const url = (docs as Record<DocKey, string>)[key] as string;
+            if (url) {
+              newPreviews[key] = {
+                file: null,
+                url: url || "",
+                isImage: /\.(jpg|jpeg|png|gif|webp)$/i.test(url),
+              };
+            }
+          });
+          setPreviews(newPreviews);
+        }
+      } catch (error) {
+        console.log("Failed to fetch existing docs", error);
+      }
+    };
+
+    fetchExistingDocs();
+  }, [partner]);
 
   const completeReg = async () => {
-    const toastId = toast.loading("Uploading...");
+    const toastId = toast.loading("Submitting request...");
     if (!isFormValid) {
       toast.error("Please upload all required documents", { id: toastId });
       return;
@@ -258,7 +256,7 @@ export default function Documents({ id }: { id: string }) {
 
     try {
 
-      const result = await submitForApproval(id as string);
+      const result = await submitForApproval(partner?.userId as string);
 
       if (result.success) {
         toast.success(

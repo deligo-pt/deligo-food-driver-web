@@ -43,6 +43,7 @@ import { getDeliveryPartnerDetails } from "@/services/deliveryPartner/deliveryPa
 import { TDeliveryPartner } from "@/types/delivery-partner.type";
 import { TResponse } from "@/types";
 import { getDeviceInfo } from "@/utils/getDeviceInfo";
+import { useRouter } from "next/navigation";
 
 type FormData = z.infer<typeof deliveryPartnerValidation>;
 
@@ -81,6 +82,7 @@ const StatusItem = ({
 
 export function StatusCheckForm() {
     const { t } = useTranslation();
+    const router = useRouter();
     const [step, setStep] = useState(0);
     const deviceInfo = getDeviceInfo();
     const [partner, setPartner] = useState<TDeliveryPartner | null>(null);
@@ -99,6 +101,7 @@ export function StatusCheckForm() {
         const deviceDetails = await deviceInfo;
         const payload = {
             ...data,
+            forceLogin: true,
             deviceDetails
         };
         try {
@@ -116,13 +119,13 @@ export function StatusCheckForm() {
                     toast.error("Cannot check status without being a Delivery Partner", { id: toastId })
                     return;
                 };
-                toast.success(result?.message, {
+                toast.success("Operation successful", {
                     id: toastId,
                 });
                 form.reset();
 
-                Cookies.set("accessToken", result?.data?.accessToken, { expires: 0.0069 });
-                Cookies.set("refreshToken", result?.data?.refreshToken, { expires: 0.0207 });
+                Cookies.set("accessToken", result?.data?.accessToken, { expires: 1 });
+                Cookies.set("refreshToken", result?.data?.refreshToken, { expires: 30 });
 
                 const partnerDetails = await getDeliveryPartnerDetails(decoded?.userId);
 
@@ -359,17 +362,27 @@ export function StatusCheckForm() {
                             </CardContent>
 
                             {/* FOOTER */}
-                            <CardFooter className="px-6 pb-6">
-                                <Button
-                                    className="w-full h-12 rounded-xl bg-primary hover:bg-primary/90 text-white font-semibold"
-                                    onClick={() => {
-                                        setStep(0);
-                                        Cookies.remove("accessToken");
-                                        Cookies.remove("refreshToken");
-                                    }}
-                                >
-                                    {t("check_again")}
-                                </Button>
+                            <CardFooter className="py-5">
+                                <div className="flex flex-row gap-5 w-full">
+                                    {(partner?.status === USER_STATUS.PENDING || partner?.status === USER_STATUS.REJECTED) && <Button
+                                        className="flex-1 h-12 rounded-xl bg-primary hover:bg-primary/90 text-white font-semibold"
+                                        onClick={() => {
+                                            router.push(`/delivery-partner/${partner?.userId}`)
+                                        }}
+                                    >
+                                        {partner?.status === USER_STATUS.PENDING ? "Update Information" : "Re-Submit"}
+                                    </Button>}
+                                    <Button
+                                        className="flex-1 h-12 rounded-xl bg-primary hover:bg-primary/90 text-white font-semibold"
+                                        onClick={() => {
+                                            setStep(0);
+                                            Cookies.remove("accessToken");
+                                            Cookies.remove("refreshToken");
+                                        }}
+                                    >
+                                        {t("check_again")}
+                                    </Button>
+                                </div>
                             </CardFooter>
                         </Card>
                     </motion.div>

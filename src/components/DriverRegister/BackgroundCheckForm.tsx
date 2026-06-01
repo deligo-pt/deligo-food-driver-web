@@ -10,7 +10,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useTranslation } from "@/hooks/use-translation";
-import { getDeliveryPartnerDetails, updatePartnerInformation } from "@/services/deliveryPartner/deliveryPartner";
+import { updatePartnerInformation } from "@/services/deliveryPartner/deliveryPartner";
 import { backgroundCheckValidation } from "@/validations/edit-delivery-partner/background-check.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
@@ -20,15 +20,16 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import { DatePicker } from "../common/DatePicker";
+import { TDeliveryPartner } from "@/types/delivery-partner.type";
 
 type FormData = z.infer<typeof backgroundCheckValidation>;
 
 interface IProps {
   onNext: () => void;
-  id: string;
+  partner: TDeliveryPartner;
 }
 
-export function BackgroundCheckForm({ onNext, id }: IProps) {
+export function BackgroundCheckForm({ onNext, partner }: IProps) {
   const { t } = useTranslation();
   const form = useForm({
     resolver: zodResolver(backgroundCheckValidation),
@@ -61,7 +62,7 @@ export function BackgroundCheckForm({ onNext, id }: IProps) {
         delete payload?.criminalRecord?.issueDate;
         delete payload?.criminalRecord?.expiryDate;
       }
-      const result = await updatePartnerInformation(id as string, payload);
+      const result = await updatePartnerInformation(partner?.userId as string, payload);
 
       if (result.success) {
         toast.success("Delivery Partner details updated successfully!", {
@@ -82,42 +83,31 @@ export function BackgroundCheckForm({ onNext, id }: IProps) {
     }
   };
 
-  const getPartnerData = async () => {
-    try {
-      const result = await getDeliveryPartnerDetails(id as string);
-
-      if (result.success) {
-        form.setValue(
-          "haveCriminalRecordCertificate",
-          result?.data?.criminalRecord?.certificate ? true : false,
-        );
-        form.setValue(
-          "issueDate",
-          (result?.data?.criminalRecord?.issueDate as unknown as string) || "",
-        );
-        form.setValue(
-          "expiryDate",
-          (result?.data?.criminalRecord?.expiryDate as unknown as string) || "",
-        );
+  useEffect(() => {
+    const getPartnerData = async () => {
+      try {
+        if (partner?._id) {
+          form.setValue(
+            "haveCriminalRecordCertificate",
+            partner?.criminalRecord?.certificate || false,
+          );
+          form.setValue(
+            "issueDate",
+            (partner?.criminalRecord?.issueDate as unknown as string) || "",
+          );
+          form.setValue(
+            "expiryDate",
+            (partner?.criminalRecord?.expiryDate as unknown as string) || "",
+          );
+        }
+      } catch (error) {
+        console.log("Error fetching delivery partner data:", error);
       }
-    } catch (error) {
-      console.log("Error fetching delivery partner data:", error);
-    }
-  };
+    };
 
-  useEffect(() => {
-    if (!hasCertificate) {
-      form.setValue("issueDate", "");
-      form.setValue("expiryDate", "");
-      form.clearErrors(["issueDate", "expiryDate"]);
-    }
-  }, [hasCertificate, form]);
+    getPartnerData();
+  }, [partner]);
 
-
-  useEffect(() => {
-    (() => getPartnerData())();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <div>
@@ -221,7 +211,7 @@ export function BackgroundCheckForm({ onNext, id }: IProps) {
                     <DatePicker
                       inputId="issueDate"
                       onChange={field.onChange}
-                      value={field.value as string}
+                      value={field.value as unknown as string}
                       isInvalid={fieldState.invalid}
                       disabled={!hasCertificate}
                     />

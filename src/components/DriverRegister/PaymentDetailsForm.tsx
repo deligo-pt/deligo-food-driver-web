@@ -10,7 +10,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useTranslation } from "@/hooks/use-translation";
-import { getDeliveryPartnerDetails, updatePartnerInformation } from "@/services/deliveryPartner/deliveryPartner";
+import { updatePartnerInformation } from "@/services/deliveryPartner/deliveryPartner";
+import { TDeliveryPartner } from "@/types/delivery-partner.type";
 import { paymentDetailsValidation } from "@/validations/edit-delivery-partner/payment-details.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
@@ -27,12 +28,12 @@ import { z } from "zod";
 
 interface IProps {
   onNext: () => void;
-  id: string;
+  partner: TDeliveryPartner;
 }
 
 type FormData = z.infer<typeof paymentDetailsValidation>;
 
-export function PaymentDetailsForm({ onNext, id }: IProps) {
+export function PaymentDetailsForm({ onNext, partner }: IProps) {
   const { t } = useTranslation();
   const form = useForm<FormData>({
     resolver: zodResolver(paymentDetailsValidation),
@@ -57,7 +58,7 @@ export function PaymentDetailsForm({ onNext, id }: IProps) {
         },
       };
 
-      const result = await updatePartnerInformation(id as string, payload);
+      const result = await updatePartnerInformation(partner?.userId as string, payload);
 
       if (result.success) {
         toast.success("Delivery Partner details updated successfully!", {
@@ -78,28 +79,25 @@ export function PaymentDetailsForm({ onNext, id }: IProps) {
     }
   };
 
-  const getPartnerData = async () => {
-    try {
-      const result = await getDeliveryPartnerDetails(id as string);
-
-      if (result.success) {
-        form.setValue("iban", result?.data?.bankDetails?.iban || "");
-        form.setValue("bankName", result?.data?.bankDetails?.bankName || "");
-        form.setValue("swiftCode", result?.data?.bankDetails?.swiftCode || "");
-        form.setValue(
-          "accountHolderName",
-          result?.data?.bankDetails?.accountHolderName || "",
-        );
-      }
-    } catch (error) {
-      console.log("Error fetching delivery partner data:", error);
-    }
-  };
-
   useEffect(() => {
-    (() => getPartnerData())();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    const getPartnerData = async () => {
+      try {
+        if (partner?._id) {
+          form.setValue("iban", partner?.bankDetails?.iban || "");
+          form.setValue("bankName", partner?.bankDetails?.bankName || "");
+          form.setValue("swiftCode", partner?.bankDetails?.swiftCode || "");
+          form.setValue(
+            "accountHolderName",
+            partner?.bankDetails?.accountHolderName || "",
+          );
+        }
+      } catch (error) {
+        console.log("Error fetching delivery partner data:", error);
+      }
+    };
+
+    getPartnerData();
+  }, [partner, form]);
 
   return (
     <div>
