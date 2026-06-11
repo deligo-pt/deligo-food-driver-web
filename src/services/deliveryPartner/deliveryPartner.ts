@@ -27,11 +27,17 @@ export const getDeliveryPartnerDetails = async (id?: string) => {
 };
 
 export const createDeliveryPartner = async (payload: any) => {
-  const res = await serverFetch.post("/auth/register/create-delivery-partner", {
+
+  const data = {
+    ...payload,
+    role: "DELIVERY_PARTNER"
+  };
+
+  const res = await serverFetch.post("/auth/register", {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(payload)
+    body: JSON.stringify(data)
   });
 
   const result = await res.json();
