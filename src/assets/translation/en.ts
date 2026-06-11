@@ -143,6 +143,8 @@ export const en = {
     // status-check
     check_account_status: "Check Account Status",
     give_credentials_check_status: "Give your credentials to check your account status",
+    loginForgotTitle: "Forgot your password?",
+    loginResetHere: "Reset here",
     check_status: "Check Status",
     registration_pending: "Registration Pending",
     registration_completed: "Registration Completed",
