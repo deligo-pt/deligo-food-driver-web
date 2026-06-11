@@ -1,4 +1,5 @@
-import ResetPasswordForm from "@/src/components/FogotResetPassword/ResetPassword";
+import ResetPasswordForm from "@/components/ForgotPassword/ResetPassword";
+
 
 export default async function ResetPasswordPage({
   searchParams,
