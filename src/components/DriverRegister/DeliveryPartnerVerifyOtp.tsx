@@ -66,6 +66,7 @@ export default function DeliveryPartnerVerifyOtp({ email }: { email: string }) {
                     {
                         email,
                         otp: finalOtp,
+                        role: "DELIVERY_PARTNER"
                     }
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 )) as unknown as TResponse<any>;
@@ -103,6 +104,7 @@ export default function DeliveryPartnerVerifyOtp({ email }: { email: string }) {
                 "/auth/resend-otp",
                 {
                     email,
+                    role: "DELIVERY_PARTNER"
                 }
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
             )) as unknown as TResponse<any>;

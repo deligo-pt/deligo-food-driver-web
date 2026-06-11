@@ -145,6 +145,8 @@ export const pt = {
     // status-check
     check_account_status: "Verificar status da conta",
     give_credentials_check_status: "Forneça suas credenciais para verificar o status da sua conta",
+    loginForgotTitle: "Esqueceu a sua palavra-passe?",
+    loginResetHere: "Redefinir aqui",
     check_status: "Verificar status",
     registration_pending: "Registo Pendente",
     registration_completed: "Registo Concluído",

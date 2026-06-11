@@ -44,6 +44,7 @@ import { TDeliveryPartner } from "@/types/delivery-partner.type";
 import { TResponse } from "@/types";
 import { getDeviceInfo } from "@/utils/getDeviceInfo";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 type FormData = z.infer<typeof deliveryPartnerValidation>;
 
@@ -242,6 +243,17 @@ export function StatusCheckForm() {
                                         </FormItem>
                                     )}
                                 />
+
+                                {/* Forgot Password */}
+                                <p className="text-gray-400 text-center mt-4">
+                                    {t("loginForgotTitle")}{" "}
+                                    <Link
+                                        href="/forgot-password"
+                                        className="text-[#DC3173] font-medium hover:underline"
+                                    >
+                                        {t("loginResetHere")}
+                                    </Link>
+                                </p>
                             </CardContent>
 
                             {/* FOOTER */}
