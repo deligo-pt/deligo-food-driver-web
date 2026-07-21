@@ -21,10 +21,19 @@ import {
   CreditCardIcon,
   UserIcon,
 } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
+import { cn } from "@/lib/utils";
+import { bankNames } from "@/consts/bankName.const";
 
 interface IProps {
   onNext: () => void;
@@ -126,7 +135,7 @@ export function PaymentDetailsForm({ onNext, partner }: IProps) {
             <FormField
               control={form.control}
               name="bankName"
-              render={({ field }) => (
+              render={({ field, fieldState }) => (
                 <FormItem className="content-start">
                   <FormLabel className="block text-sm font-medium text-gray-700 mb-1">
                     <div className="flex items-center">
@@ -135,11 +144,25 @@ export function PaymentDetailsForm({ onNext, partner }: IProps) {
                     </div>
                   </FormLabel>
                   <FormControl>
-                    <Input
-                      {...field}
-                      placeholder="e.g. Santander Bank"
-                      className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-[#DC3173] focus:border-[#DC3173] outline-none transition-all border-gray-300"
-                    />
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <SelectTrigger
+                        className={cn(
+                          "w-full p-3 border rounded-lg focus:ring-2 focus:ring-[#DC3173] focus:border-[#DC3173] outline-none transition-all",
+                          fieldState.invalid
+                            ? "border-red-500"
+                            : "border-gray-300",
+                        )}
+                      >
+                        <SelectValue placeholder={t("select_bank_name")} />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {bankNames.map((value) => (
+                          <SelectItem key={value} value={value}>
+                            {value}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
