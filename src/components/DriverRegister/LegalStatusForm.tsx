@@ -130,6 +130,8 @@ export function LegalStatusForm({ onNext, partner }: IProps) {
 
   }, [partner, form]);
 
+  const today = new Date();
+
   return (
     <div>
       <motion.div
@@ -237,6 +239,7 @@ export function LegalStatusForm({ onNext, partner }: IProps) {
                       onChange={field.onChange}
                       value={field.value}
                       isInvalid={fieldState.invalid}
+                      minDate={today}
                     />
                   </FormControl>
                   <FormMessage />
