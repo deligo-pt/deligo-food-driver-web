@@ -58,6 +58,7 @@ export const en = {
     // -> payment details
     payment_banking_details: "Payment & Banking Details",
     please_provide_partner_banking: "Please provide partner’s banking information for payments",
+    select_bank_name: "Select Bank Name",
     swift: "SWIFT",
     this_payment_information_is_secure: "This payment information is secure and will only be used for processing their earnings. The account holder name must match delivery partner’s ID for verification purposes.",
     continue_to_vehicle_information: "Continue to Vehicle Information",
@@ -116,6 +117,7 @@ export const en = {
 
     // -> upload documents
     upload_your_documents: "Upload Your Documents",
+    documents: "Documents",
     vehicle_type_bicycle: "If your vehicle type is Bicyle or E-Bike,then you don't have to submit Driving Licenses and Vehicle Registation documents",
     vehicle_type_not_bicycle: "If your vehicle type is not Bicycle or E-Bike,then you have to submit Driving Licenses and Vehicle Registration documents for further assurance. If you don't submit, the authorities will not be responsible for it.",
     my_photo: "My Photo",
@@ -134,6 +136,7 @@ export const en = {
     rider_registration: "Rider Registration",
     status_check: "Status Check",
     // -> notes
+    note: "Note",
     join_our_delivery: "Join our delivery",
     network_today: "network today.",
     become_a_part_of: "Become a part of the fastest growing logistics platform. Set your own schedule and earn more with DeliGo.",

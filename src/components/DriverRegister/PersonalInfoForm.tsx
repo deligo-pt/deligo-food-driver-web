@@ -179,13 +179,6 @@ export function PersonalInfoForm({ onNext, partner }: IProps) {
     getPartnerData();
   }, [partner, form]);
 
-  useEffect(() => {
-    const currentPhone = form.getValues("phoneNumber");
-    if (!currentPhone) {
-      form.setValue("phoneNumber", "+351", { shouldValidate: true });
-    }
-  }, [form]);
-
   const today = new Date();
 
   return (
@@ -543,7 +536,10 @@ export function PersonalInfoForm({ onNext, partner }: IProps) {
                   <FormLabel className="block text-sm font-medium text-gray-700 mb-1">
                     <div className="flex items-center">
                       <FlagIcon className="w-5 h-5 text-[#DC3173]" />
-                      <span className="ml-2">{t("country")}<span className="text-red-600 ml-1">*</span></span>
+                      <span className="ml-2">
+                        {t("country")}
+                        <span className="text-red-600 ml-1">*</span>
+                      </span>
                     </div>
                   </FormLabel>
                   <Popover open={open} onOpenChange={setOpen}>
@@ -560,31 +556,49 @@ export function PersonalInfoForm({ onNext, partner }: IProps) {
                           )}
                         >
                           {field.value
-                            ? countryOptions.find((country) => country.value.toLowerCase() === field.value.toLowerCase())?.label
+                            ? countryOptions.find(
+                              (country) =>
+                                country.value.toLowerCase() === field.value.toLowerCase()
+                            )?.label
                             : t("Select country...") || "Select country..."}
                           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50 text-gray-500" />
                         </Button>
                       </FormControl>
                     </PopoverTrigger>
-                    <PopoverContent className="w-(--radix-popover-trigger-width) p-0" align="start">
-                      <Command>
-                        <CommandInput placeholder={`${t("Search country")}...`} className="h-9" />
-                        <CommandList>
-                          <CommandEmpty>{t("No country found.") || "No country found."}</CommandEmpty>
-                          <CommandGroup className="max-h-[250px] overflow-y-auto">
+
+                    <PopoverContent
+                      side="bottom"
+                      align="start"
+                      sideOffset={4}
+                      className="w-[var(--radix-popover-trigger-width)] p-0 z-50 bg-white border border-gray-200 shadow-lg rounded-lg overflow-hidden"
+                    >
+                      <Command className="bg-white">
+                        <CommandInput
+                          placeholder={`${t("Search country")}...`}
+                          className="h-9"
+                        />
+                        <CommandList className="max-h-[200px] overflow-y-auto bg-white">
+                          <CommandEmpty>
+                            {t("No country found.") || "No country found."}
+                          </CommandEmpty>
+                          <CommandGroup>
                             {countryOptions.map((country) => (
                               <CommandItem
                                 value={country.label}
                                 key={country.value}
                                 onSelect={() => {
-                                  form.setValue("country", country.value, { shouldValidate: true });
+                                  form.setValue("country", country.value, {
+                                    shouldValidate: true,
+                                  });
                                   setOpen(false);
                                 }}
+                                className="cursor-pointer hover:bg-rose-50"
                               >
                                 <Check
                                   className={cn(
                                     "mr-2 h-4 w-4 text-[#DC3173]",
-                                    country.value.toLowerCase() === field.value?.toLowerCase()
+                                    country.value.toLowerCase() ===
+                                      field.value?.toLowerCase()
                                       ? "opacity-100"
                                       : "opacity-0"
                                   )}
