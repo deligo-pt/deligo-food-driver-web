@@ -220,7 +220,7 @@ export function PersonalInfoForm({ onNext, partner }: IProps) {
                   <FormLabel className="block text-sm font-medium text-gray-700 mb-1">
                     <div className="flex items-center">
                       <UserIcon className="w-5 h-5 text-[#DC3173]" />
-                      <span className="ml-2">{t("first_name")}</span>
+                      <span className="ml-2">{t("first_name")}<span className="text-red-600 ml-1">*</span></span>
                     </div>
                   </FormLabel>
                   <FormControl>
@@ -243,7 +243,7 @@ export function PersonalInfoForm({ onNext, partner }: IProps) {
                   <FormLabel className="block text-sm font-medium text-gray-700 mb-1">
                     <div className="flex items-center">
                       <UserIcon className="w-5 h-5 text-[#DC3173]" />
-                      <span className="ml-2">{t("last_name")}</span>
+                      <span className="ml-2">{t("last_name")}<span className="text-red-600 ml-1">*</span></span>
                     </div>
                   </FormLabel>
                   <FormControl>
@@ -265,7 +265,7 @@ export function PersonalInfoForm({ onNext, partner }: IProps) {
                 <FormItem>
                   <div className="flex items-center text-sm font-medium text-gray-700 mb-1">
                     <PhoneIcon className="w-5 h-5 text-[#DC3173]" />
-                    <span className="ml-2">{t("phone_number")}</span>
+                    <span className="ml-2">{t("phone_number")}<span className="text-red-600 ml-1">*</span></span>
                   </div>
 
                   <FormControl>
@@ -323,7 +323,7 @@ export function PersonalInfoForm({ onNext, partner }: IProps) {
                   >
                     <div className="flex items-center">
                       <CalendarIcon className="w-5 h-5 text-[#DC3173]" />
-                      <span className="ml-2">{t("date_of_birth")}</span>
+                      <span className="ml-2">{t("date_of_birth")}<span className="text-red-600 ml-1">*</span></span>
                     </div>
                   </FormLabel>
                   <FormControl>
@@ -348,7 +348,7 @@ export function PersonalInfoForm({ onNext, partner }: IProps) {
                   <FormLabel className="block text-sm font-medium text-gray-700 mb-1">
                     <div className="flex items-center">
                       <UserIcon className="w-5 h-5 text-[#DC3173]" />
-                      <span className="ml-2">{t("gender")}</span>
+                      <span className="ml-2">{t("gender")}<span className="text-red-600 ml-1">*</span></span>
                     </div>
                   </FormLabel>
                   <FormControl>
@@ -383,7 +383,7 @@ export function PersonalInfoForm({ onNext, partner }: IProps) {
                   <FormLabel className="block text-sm font-medium text-gray-700 mb-1">
                     <div className="flex items-center">
                       <FlagIcon className="w-5 h-5 text-[#DC3173]" />
-                      <span className="ml-2">{t("nationality")}</span>
+                      <span className="ml-2">{t("nationality")}<span className="text-red-600 ml-1">*</span></span>
                     </div>
                   </FormLabel>
                   <FormControl>
@@ -406,7 +406,7 @@ export function PersonalInfoForm({ onNext, partner }: IProps) {
                   <FormLabel className="block text-sm font-medium text-gray-700 mb-1">
                     <div className="flex items-center">
                       <IdCardIcon className="w-5 h-5 text-[#DC3173]" />
-                      <span className="ml-2">{t("nif_number")}</span>
+                      <span className="ml-2">{t("nif_number")}<span className="text-red-600 ml-1">*</span></span>
                     </div>
                   </FormLabel>
                   <FormControl>
@@ -451,7 +451,7 @@ export function PersonalInfoForm({ onNext, partner }: IProps) {
                   <FormLabel className="block text-sm font-medium text-gray-700 mb-1">
                     <div className="flex items-center">
                       <MapPinIcon className="w-5 h-5 text-[#DC3173]" />
-                      <span className="ml-2">{t("street")}</span>
+                      <span className="ml-2">{t("street")}<span className="text-red-600 ml-1">*</span></span>
                     </div>
                   </FormLabel>
                   <FormControl>
@@ -474,7 +474,7 @@ export function PersonalInfoForm({ onNext, partner }: IProps) {
                   <FormLabel className="block text-sm font-medium text-gray-700 mb-1">
                     <div className="flex items-center">
                       <MapPinIcon className="w-5 h-5 text-[#DC3173]" />
-                      <span className="ml-2">{t("city")}</span>
+                      <span className="ml-2">{t("city")}<span className="text-red-600 ml-1">*</span></span>
                     </div>
                   </FormLabel>
                   <FormControl>
@@ -497,7 +497,7 @@ export function PersonalInfoForm({ onNext, partner }: IProps) {
                   <FormLabel className="block text-sm font-medium text-gray-700 mb-1">
                     <div className="flex items-center">
                       <MapPinIcon className="w-5 h-5 text-[#DC3173]" />
-                      <span className="ml-2">{t("postal_code")}</span>
+                      <span className="ml-2">{t("postal_code")}<span className="text-red-600 ml-1">*</span></span>
                     </div>
                   </FormLabel>
                   <FormControl>

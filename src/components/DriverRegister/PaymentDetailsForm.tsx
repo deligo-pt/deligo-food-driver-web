@@ -140,7 +140,7 @@ export function PaymentDetailsForm({ onNext, partner }: IProps) {
                   <FormLabel className="block text-sm font-medium text-gray-700 mb-1">
                     <div className="flex items-center">
                       <BuildingIcon className="w-5 h-5 text-[#DC3173]" />
-                      <span className="ml-2">{t("bankName")}</span>
+                      <span className="ml-2">{t("bankName")}<span className="text-red-600 ml-1">*</span></span>
                     </div>
                   </FormLabel>
                   <FormControl>
@@ -176,7 +176,7 @@ export function PaymentDetailsForm({ onNext, partner }: IProps) {
                   <FormLabel className="block text-sm font-medium text-gray-700 mb-1">
                     <div className="flex items-center">
                       <UserIcon className="w-5 h-5 text-[#DC3173]" />
-                      <span className="ml-2">{t("accountHolder")}</span>
+                      <span className="ml-2">{t("accountHolder")}<span className="text-red-600 ml-1">*</span></span>
                     </div>
                   </FormLabel>
                   <FormControl>
@@ -198,7 +198,7 @@ export function PaymentDetailsForm({ onNext, partner }: IProps) {
                   <FormLabel className="block text-sm font-medium text-gray-700 mb-1">
                     <div className="flex items-center">
                       <CreditCardIcon className="w-5 h-5 text-[#DC3173]" />
-                      <span className="ml-2">{t("iban")}</span>
+                      <span className="ml-2">{t("iban")}<span className="text-red-600 ml-1">*</span></span>
                     </div>
                   </FormLabel>
                   <FormControl>
@@ -220,7 +220,7 @@ export function PaymentDetailsForm({ onNext, partner }: IProps) {
                   <FormLabel className="block text-sm font-medium text-gray-700 mb-1">
                     <div className="flex items-center">
                       <BuildingIcon className="w-5 h-5 text-[#DC3173]" />
-                      <span className="ml-2">{t("swift")} </span>
+                      <span className="ml-2">{t("swift")}<span className="text-red-600 ml-1">*</span> </span>
                     </div>
                   </FormLabel>
                   <FormControl>

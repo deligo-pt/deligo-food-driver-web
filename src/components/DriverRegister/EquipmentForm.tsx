@@ -193,7 +193,7 @@ export function EquipmentForm({ onNext, partner }: IProps) {
             <div className="space-y-2">
               <Label className="flex items-center text-sm font-medium text-gray-700 mb-1">
                 <MapPinIcon className="w-5 h-5 text-[#DC3173]" />
-                {t("preferred_working_zones")}
+                {t("preferred_working_zones")}<span className="text-red-600 ml-1">*</span>
               </Label>
               {watchZones?.length > 0 && (
                 <div className="flex flex-wrap gap-2 mb-1">
@@ -264,7 +264,7 @@ export function EquipmentForm({ onNext, partner }: IProps) {
                     <div className="flex items-center">
                       <ClockIcon className="w-5 h-5 text-[#DC3173]" />
                       <span className="ml-2">
-                        {t("preferred_working_hours")}
+                        {t("preferred_working_hours")}<span className="text-red-600 ml-1">*</span>
                       </span>
                     </div>
                   </FormLabel>
