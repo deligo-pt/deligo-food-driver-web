@@ -1,6 +1,4 @@
-import parsePhoneNumberFromString, {
-  isValidPhoneNumber,
-} from "libphonenumber-js";
+import parsePhoneNumberFromString from "libphonenumber-js";
 import z from "zod";
 
 const optionalString = z
@@ -22,9 +20,35 @@ export const personalInfoValidation = z
       .min(2, "Last name must be at least 2 characters long")
       .max(30, "Last name must be at most 30 characters long"),
 
-    prefixPhoneNumber: z.string(),
+    // prefixPhoneNumber: z.string(),
 
-    phoneNumber: z.string().nonempty("Phone number is required"),
+    phoneNumber: z.string().superRefine((value, ctx) => {
+      const phone = value.trim();
+
+      if (!phone || phone === "+351") {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Phone number is required",
+        });
+        return;
+      }
+
+      try {
+        const parsed = parsePhoneNumberFromString(phone);
+
+        if (!parsed?.isValid()) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: "Invalid phone number for the selected country",
+          });
+        }
+      } catch {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Invalid phone number for the selected country",
+        });
+      }
+    }),
 
     dateOfBirth: z
       .string()
@@ -64,25 +88,5 @@ export const personalInfoValidation = z
 
     country: z
       .string()
-      .min(2, "Country must be at least 2 characters")
-      .max(50, "Country must be at most 50 characters"),
+      .min(2, "Select a country")
   })
-  .refine(
-    (data) => {
-      const full = data.prefixPhoneNumber + data.phoneNumber;
-      return isValidPhoneNumber(full);
-    },
-    {
-      message: "Invalid phone number for the selected country",
-      path: ["phoneNumber"],
-    }
-  )
-  .transform((data) => {
-    const full = data.prefixPhoneNumber + data.phoneNumber;
-    const phone = parsePhoneNumberFromString(full);
-
-    return {
-      ...data,
-      phoneNumber: `+${phone?.countryCallingCode}${phone?.nationalNumber}`,
-    };
-  });

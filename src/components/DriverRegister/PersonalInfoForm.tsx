@@ -10,12 +10,25 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { useTranslation } from "@/hooks/use-translation";
 import { cn } from "@/lib/utils";
 import { updatePartnerInformation } from "@/services/deliveryPartner/deliveryPartner";
@@ -25,19 +38,23 @@ import { motion } from "framer-motion";
 import {
   ArrowRightIcon,
   CalendarIcon,
+  Check,
+  ChevronsUpDown,
   FlagIcon,
   IdCardIcon,
   MapPinIcon,
   PhoneIcon,
   UserIcon,
 } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { PhoneInput } from "react-international-phone";
 import { toast } from "sonner";
 import { z } from "zod";
 import { DatePicker } from "../common/DatePicker";
 import { TDeliveryPartner } from "@/types/delivery-partner.type";
+import { countries } from 'countries-list';
+import { Button } from "../ui/button";
 
 type FormData = z.infer<typeof personalInfoValidation>;
 
@@ -48,13 +65,16 @@ interface IProps {
 
 export function PersonalInfoForm({ onNext, partner }: IProps) {
   const { t } = useTranslation();
+  const [open, setOpen] = useState(false);
   const form = useForm<FormData>({
     resolver: zodResolver(personalInfoValidation),
+    mode: "onSubmit",
+    reValidateMode: "onChange",
     defaultValues: {
       firstName: "",
       lastName: "",
-      prefixPhoneNumber: "",
-      phoneNumber: "",
+      // prefixPhoneNumber: "+351",
+      phoneNumber: "+351",
       dateOfBirth: "",
       nationality: "",
       gender: "MALE",
@@ -67,6 +87,16 @@ export function PersonalInfoForm({ onNext, partner }: IProps) {
       country: "",
     },
   });
+
+  const { formState: { isSubmitting } } = form;
+
+  // Create an optimized, sorted list outside the component so it doesn't recalculate on every render
+  const countryOptions = Object.entries(countries)
+    .map(([code, country]) => ({
+      value: country.name,
+      label: country.name,
+    }))
+    .sort((a, b) => a.label.localeCompare(b.label));
 
   const onSubmit = async (values: FormData) => {
     const toastId = toast.loading("Updating Delivery Partner details...");
@@ -155,6 +185,8 @@ export function PersonalInfoForm({ onNext, partner }: IProps) {
       form.setValue("phoneNumber", "+351", { shouldValidate: true });
     }
   }, [form]);
+
+  const today = new Date();
 
   return (
     <div>
@@ -300,6 +332,7 @@ export function PersonalInfoForm({ onNext, partner }: IProps) {
                       onChange={field.onChange}
                       value={field.value}
                       isInvalid={fieldState.invalid}
+                      maxDate={today}
                     />
                   </FormControl>
                   <FormMessage />
@@ -506,20 +539,64 @@ export function PersonalInfoForm({ onNext, partner }: IProps) {
               control={form.control}
               name="country"
               render={({ field }) => (
-                <FormItem className="content-start">
+                <FormItem className="content-start flex flex-col">
                   <FormLabel className="block text-sm font-medium text-gray-700 mb-1">
                     <div className="flex items-center">
                       <FlagIcon className="w-5 h-5 text-[#DC3173]" />
-                      <span className="ml-2">{t("country")}</span>
+                      <span className="ml-2">{t("country")}<span className="text-red-600 ml-1">*</span></span>
                     </div>
                   </FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      placeholder=""
-                      className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-[#DC3173] focus:border-[#DC3173] outline-none transition-all border-gray-300"
-                    />
-                  </FormControl>
+                  <Popover open={open} onOpenChange={setOpen}>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          aria-expanded={open}
+                          className={cn(
+                            "w-full p-3 h-9 justify-between font-normal border rounded-lg outline-none transition-all border-gray-300 bg-white hover:bg-white text-left",
+                            !field.value && "text-muted-foreground",
+                            open && "ring-2 ring-[#DC3173] border-[#DC3173]"
+                          )}
+                        >
+                          {field.value
+                            ? countryOptions.find((country) => country.value.toLowerCase() === field.value.toLowerCase())?.label
+                            : t("Select country...") || "Select country..."}
+                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50 text-gray-500" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-(--radix-popover-trigger-width) p-0" align="start">
+                      <Command>
+                        <CommandInput placeholder={`${t("Search country")}...`} className="h-9" />
+                        <CommandList>
+                          <CommandEmpty>{t("No country found.") || "No country found."}</CommandEmpty>
+                          <CommandGroup className="max-h-[250px] overflow-y-auto">
+                            {countryOptions.map((country) => (
+                              <CommandItem
+                                value={country.label}
+                                key={country.value}
+                                onSelect={() => {
+                                  form.setValue("country", country.value, { shouldValidate: true });
+                                  setOpen(false);
+                                }}
+                              >
+                                <Check
+                                  className={cn(
+                                    "mr-2 h-4 w-4 text-[#DC3173]",
+                                    country.value.toLowerCase() === field.value?.toLowerCase()
+                                      ? "opacity-100"
+                                      : "opacity-0"
+                                  )}
+                                />
+                                {country.label}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </CommandList>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
                   <FormMessage />
                 </FormItem>
               )}
@@ -598,6 +675,7 @@ export function PersonalInfoForm({ onNext, partner }: IProps) {
               scale: 0.98,
             }}
             type="submit"
+            disabled={isSubmitting}
             className="mt-8 w-full bg-[#DC3173] text-white py-3 px-6 rounded-lg font-medium text-lg hover:bg-[#c21c5e] transition-colors duration-300 flex items-center justify-center"
           >
             {t("continue_to_legal_status")}
