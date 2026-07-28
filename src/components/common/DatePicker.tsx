@@ -71,18 +71,47 @@ export function DatePicker({
     onChange,
     isInvalid,
     disabled,
+    minDate,
+    maxDate,
 }: {
     inputId: string;
     value: string;
     onChange: (value: string) => void;
     isInvalid: boolean;
     disabled?: boolean;
+    minDate?: Date;
+    maxDate?: Date;
 }) {
     // FIXED
     const isoDate = React.useMemo(
         () => parseLocalISOString(value),
         [value]
     );
+
+    function isDateInRange(
+        date: Date,
+        minDate?: Date,
+        maxDate?: Date
+    ) {
+        const selected = new Date(date);
+        selected.setHours(0, 0, 0, 0);
+
+        if (minDate) {
+            const min = new Date(minDate);
+            min.setHours(0, 0, 0, 0);
+
+            if (selected < min) return false;
+        }
+
+        if (maxDate) {
+            const max = new Date(maxDate);
+            max.setHours(0, 0, 0, 0);
+
+            if (selected > max) return false;
+        }
+
+        return true;
+    }
 
     const displayValue = isoDate
         ? formatToDDMMYYYY(isoDate)
@@ -100,9 +129,20 @@ export function DatePicker({
         }
     }, [isoDate]);
 
+    // counting year
+    const currentYear = new Date().getFullYear();
+
+    const startYear = minDate
+        ? minDate.getFullYear()
+        : 1900;
+
+    const endYear = maxDate
+        ? maxDate.getFullYear()
+        : currentYear + 50;
+
     const years = Array.from(
-        { length: 130 },
-        (_, i) => 1900 + i
+        { length: endYear - startYear + 1 },
+        (_, i) => startYear + i
     );
 
     return (
@@ -125,7 +165,7 @@ export function DatePicker({
 
                     const parsed = parseDDMMYYYY(inputValue);
 
-                    if (parsed) {
+                    if (parsed && isDateInRange(parsed, minDate, maxDate)) {
                         onChange(toLocalISOString(parsed));
                         setMonth(parsed);
                     }
@@ -202,12 +242,15 @@ export function DatePicker({
                         selected={isoDate}
                         month={month}
                         onMonthChange={setMonth}
+                        disabled={(date) => !isDateInRange(date, minDate, maxDate)}
                         onSelect={(selectedDate) => {
                             if (
                                 disabled ||
-                                !selectedDate
-                            )
+                                !selectedDate ||
+                                !isDateInRange(selectedDate, minDate, maxDate)
+                            ) {
                                 return;
+                            }
 
                             onChange(
                                 toLocalISOString(selectedDate)

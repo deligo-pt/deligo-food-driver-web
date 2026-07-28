@@ -50,6 +50,8 @@ export function EquipmentForm({ onNext, partner }: IProps) {
   const [zone, setZone] = useState("");
   const form = useForm<FormData>({
     resolver: zodResolver(equipmentValidation),
+    mode: "onSubmit",
+    reValidateMode: "onChange",
     defaultValues: {
       preferredZones: [],
       preferredHours: [],
@@ -60,6 +62,9 @@ export function EquipmentForm({ onNext, partner }: IProps) {
       otherPlatformName: "",
     },
   });
+
+  const { formState: { isSubmitting } } = form;
+
   const equipment = [
     {
       id: "isothermalBag",
@@ -193,7 +198,7 @@ export function EquipmentForm({ onNext, partner }: IProps) {
             <div className="space-y-2">
               <Label className="flex items-center text-sm font-medium text-gray-700 mb-1">
                 <MapPinIcon className="w-5 h-5 text-[#DC3173]" />
-                {t("preferred_working_zones")}
+                {t("preferred_working_zones")}<span className="text-red-600 ml-1">*</span>
               </Label>
               {watchZones?.length > 0 && (
                 <div className="flex flex-wrap gap-2 mb-1">
@@ -264,7 +269,7 @@ export function EquipmentForm({ onNext, partner }: IProps) {
                     <div className="flex items-center">
                       <ClockIcon className="w-5 h-5 text-[#DC3173]" />
                       <span className="ml-2">
-                        {t("preferred_working_hours")}
+                        {t("preferred_working_hours")}<span className="text-red-600 ml-1">*</span>
                       </span>
                     </div>
                   </FormLabel>
@@ -407,6 +412,7 @@ export function EquipmentForm({ onNext, partner }: IProps) {
               scale: 0.98,
             }}
             type="submit"
+            disabled={isSubmitting}
             className="mt-8 w-full bg-[#DC3173] text-white py-3 px-6 rounded-lg font-medium text-lg hover:bg-[#c21c5e] transition-colors duration-300 flex items-center justify-center"
           >
             {t("continue_to_documents")}
