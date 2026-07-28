@@ -29,7 +29,7 @@ import {
   IdCardIcon,
 } from "lucide-react";
 import { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
 import { DatePicker } from "../common/DatePicker";
@@ -43,6 +43,7 @@ interface IProps {
 type FormData = z.infer<typeof legalStatusValidation>;
 
 const permitTypes = [
+  "Passport",
   "Temporary Residence",
   "Permanent Residence",
   "EU Citizen",
@@ -58,6 +59,13 @@ export function LegalStatusForm({ onNext, partner }: IProps) {
       residencePermitNumber: "",
       residencePermitExpiry: "",
     },
+  });
+
+  const { formState: { isSubmitting } } = form;
+
+  const [residencePermitType] = useWatch({
+    control: form.control,
+    name: ["residencePermitType"],
   });
 
   const onSubmit = async (values: FormData) => {
@@ -122,6 +130,8 @@ export function LegalStatusForm({ onNext, partner }: IProps) {
 
   }, [partner, form]);
 
+  const today = new Date();
+
   return (
     <div>
       <motion.div
@@ -154,7 +164,7 @@ export function LegalStatusForm({ onNext, partner }: IProps) {
                   <FormLabel className="block text-sm font-medium text-gray-700 mb-1">
                     <div className="flex items-center">
                       <BuildingIcon className="w-5 h-5 text-[#DC3173]" />
-                      <span className="ml-2">{t("residence_permit_type")}</span>
+                      <span className="ml-2">{t("residence_permit_type")}<span className="text-red-600 ml-1">*</span></span>
                     </div>
                   </FormLabel>
                   <FormControl>
@@ -194,13 +204,16 @@ export function LegalStatusForm({ onNext, partner }: IProps) {
                   <FormLabel className="block text-sm font-medium text-gray-700 mb-1">
                     <div className="flex items-center">
                       <IdCardIcon className="w-5 h-5 text-[#DC3173]" />
-                      <span className="ml-2">{t("trc_number")}</span>
+                      <span className="ml-2">
+                        {residencePermitType === "Passport" ? t("passport_number") : t("residence_permit_number")}
+                        <span className="text-red-600 ml-1">*</span>
+                      </span>
                     </div>
                   </FormLabel>
                   <FormControl>
                     <Input
                       {...field}
-                      placeholder="Residence Permit Number"
+                      placeholder={residencePermitType === "Passport" ? t("passport_number") : t("residence_permit_number")}
                       className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-[#DC3173] focus:border-[#DC3173] outline-none transition-all border-gray-300"
                     />
                   </FormControl>
@@ -220,7 +233,10 @@ export function LegalStatusForm({ onNext, partner }: IProps) {
                   >
                     <div className="flex items-center">
                       <CalendarIcon className="w-5 h-5 text-[#DC3173]" />
-                      <span className="ml-2">{t("trc_expiration_date")}</span>
+                      <span className="ml-2">
+                        {residencePermitType === "Passport" ? t("passport_expiry") : t("residence_permit_expiry")}
+                        <span className="text-red-600 ml-1">*</span>
+                      </span>
                     </div>
                   </FormLabel>
                   <FormControl>
@@ -229,6 +245,7 @@ export function LegalStatusForm({ onNext, partner }: IProps) {
                       onChange={field.onChange}
                       value={field.value}
                       isInvalid={fieldState.invalid}
+                      minDate={today}
                     />
                   </FormControl>
                   <FormMessage />
@@ -244,6 +261,7 @@ export function LegalStatusForm({ onNext, partner }: IProps) {
               scale: 0.98,
             }}
             type="submit"
+            disabled={isSubmitting}
             className="mt-8 w-full bg-[#DC3173] text-white py-3 px-6 rounded-lg font-medium text-lg hover:bg-[#c21c5e] transition-colors duration-300 flex items-center justify-center"
           >
             {t("continue_to_payment_details")}

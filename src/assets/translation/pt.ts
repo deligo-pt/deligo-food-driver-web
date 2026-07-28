@@ -49,6 +49,10 @@ export const pt = {
     right_to_work: "Direito a trabalhar",
     please_provide_details_partner: "Forneça informações sobre o estado legal do parceiro",
     residence_permit_type: "Tipo de autorização de residência",
+    residence_permit_number: "Número da Autorização de Residência",
+    passport_number: "Número do Passaporte",
+    residence_permit_expiry: "Validade da Autorização de Residência",
+    passport_expiry: "Validade do Passaporte",
     trc_number: "Número do TRC / Título de residência",
     trc_expiration_date: "Data de Expiração do TRC",
     continue_to_payment_details: "Continuar para detalhes de pagamento",
@@ -56,6 +60,7 @@ export const pt = {
     // -> payment details
     payment_banking_details: "Detalhes de pagamento e bancários",
     please_provide_partner_banking: "Forneça as informações bancárias do parceiro para pagamentos",
+    select_bank_name: "Selecionar Nome do Banco",
     swift: "SWIFT",
     this_payment_information_is_secure: "Estas informações de pagamento são seguras e usadas apenas para processar os ganhos. O nome do titular da conta deve corresponder ao documento do parceiro.",
     continue_to_vehicle_information: "Continuar para informação do veículo",
@@ -113,6 +118,7 @@ export const pt = {
 
     // -> upload documents
     upload_your_documents: "Carregar os seus documentos",
+    documents: "Documentos",
     vehicle_type_bicycle: "Se o seu tipo de veículo for Bicicleta ou E-Bike, não é necessário submeter a carta de condução nem os documentos de registo do veículo.",
     vehicle_type_not_bicycle: "Se o seu tipo de veículo não for Bicicleta ou E-Bike, terá de submeter a carta de condução e os documentos de registo do veículo para maior garantia. Caso não os submeta, as autoridades não serão responsáveis por isso.",
     my_photo: "Minha foto",
@@ -131,6 +137,7 @@ export const pt = {
     rider_registration: "Formulário de Registo de Estafeta",
     status_check: "Verificação de estado",
     // -> notes
+    note: "Nota",
     join_our_delivery: "Junte-se hoje à nossa",
     network_today: "rede de entregas",
     become_a_part_of: "Torne-se parte da plataforma de logística que mais cresce. Defina o seu próprio horário e ganhe mais com a DeliGo.",

@@ -180,6 +180,8 @@ export function VehicleInfoForm({ onNext, partner }: IProps) {
 
   }, [partner, form]);
 
+  const today = new Date();
+
   return (
     <div>
       <motion.div
@@ -212,7 +214,7 @@ export function VehicleInfoForm({ onNext, partner }: IProps) {
                   <div className="block text-sm font-medium text-gray-700 mb-1">
                     <div className="flex items-center">
                       <CarIcon className="w-5 h-5 text-[#DC3173]" />
-                      <span className="ml-2">{t("vehicle_type")}</span>
+                      <span className="ml-2">{t("vehicle_type")}<span className="text-red-600 ml-1">*</span></span>
                     </div>
                   </div>
                   <FormControl>
@@ -357,7 +359,7 @@ export function VehicleInfoForm({ onNext, partner }: IProps) {
                                 <div className="flex items-center">
                                   <TruckIcon className="w-5 h-5 text-[#DC3173]" />
                                   <span className="ml-2">
-                                    {t("driving_license_number")}
+                                    {t("driving_license_number")}<span className="text-red-600 ml-1">*</span>
                                   </span>
                                 </div>
                               </FormLabel>
@@ -385,7 +387,7 @@ export function VehicleInfoForm({ onNext, partner }: IProps) {
                                 <div className="flex items-center">
                                   <CalendarIcon className="w-5 h-5 text-[#DC3173]" />
                                   <span className="ml-2">
-                                    {t("driving_license_expiry")}
+                                    {t("driving_license_expiry")}<span className="text-red-600 ml-1">*</span>
                                   </span>
                                 </div>
                               </FormLabel>
@@ -395,6 +397,7 @@ export function VehicleInfoForm({ onNext, partner }: IProps) {
                                   onChange={field.onChange}
                                   value={field.value || ""}
                                   isInvalid={fieldState.invalid}
+                                  minDate={today}
                                 />
                               </FormControl>
                               <FormMessage />
@@ -411,7 +414,7 @@ export function VehicleInfoForm({ onNext, partner }: IProps) {
                                 <div className="flex items-center">
                                   <TruckIcon className="w-5 h-5 text-[#DC3173]" />
                                   <span className="ml-2">
-                                    {t("insurance_policy_number")}
+                                    {t("insurance_policy_number")}<span className="text-red-600 ml-1">*</span>
                                   </span>
                                 </div>
                               </FormLabel>
@@ -439,7 +442,7 @@ export function VehicleInfoForm({ onNext, partner }: IProps) {
                                 <div className="flex items-center">
                                   <CalendarIcon className="w-5 h-5 text-[#DC3173]" />
                                   <span className="ml-2">
-                                    {t("insurance_expiry")}
+                                    {t("insurance_expiry")}<span className="text-red-600 ml-1">*</span>
                                   </span>
                                 </div>
                               </FormLabel>
@@ -449,6 +452,7 @@ export function VehicleInfoForm({ onNext, partner }: IProps) {
                                   onChange={field.onChange}
                                   value={field.value}
                                   isInvalid={fieldState.invalid}
+                                  minDate={today}
                                 />
                               </FormControl>
                               <FormMessage />
