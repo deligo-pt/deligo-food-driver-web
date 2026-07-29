@@ -18,7 +18,6 @@ import { motion } from "framer-motion";
 import {
   ArrowRightIcon,
   BuildingIcon,
-  CreditCardIcon,
   UserIcon,
 } from "lucide-react";
 import {
@@ -47,7 +46,7 @@ export function PaymentDetailsForm({ onNext, partner }: IProps) {
   const form = useForm<FormData>({
     resolver: zodResolver(paymentDetailsValidation),
     defaultValues: {
-      iban: "",
+      // iban: "",
       bankName: "",
       swiftCode: "",
       accountHolderName: "",
@@ -60,7 +59,7 @@ export function PaymentDetailsForm({ onNext, partner }: IProps) {
     try {
       const payload = {
         bankDetails: {
-          iban: values.iban,
+          // iban: values.iban,
           bankName: values.bankName,
           swiftCode: values.swiftCode,
           accountHolderName: values.accountHolderName,
@@ -92,7 +91,7 @@ export function PaymentDetailsForm({ onNext, partner }: IProps) {
     const getPartnerData = async () => {
       try {
         if (partner?._id) {
-          form.setValue("iban", partner?.bankDetails?.iban || "");
+          // form.setValue("iban", partner?.bankDetails?.iban || "");
           form.setValue("bankName", partner?.bankDetails?.bankName || "");
           form.setValue("swiftCode", partner?.bankDetails?.swiftCode || "");
           form.setValue(
@@ -190,7 +189,7 @@ export function PaymentDetailsForm({ onNext, partner }: IProps) {
                 </FormItem>
               )}
             />
-            <FormField
+            {/* <FormField
               control={form.control}
               name="iban"
               render={({ field }) => (
@@ -211,7 +210,7 @@ export function PaymentDetailsForm({ onNext, partner }: IProps) {
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            /> */}
             <FormField
               control={form.control}
               name="swiftCode"
