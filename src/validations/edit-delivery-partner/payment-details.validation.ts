@@ -13,10 +13,10 @@ export const paymentDetailsValidation = z.object({
     .max(100, "Account holder name must be at most 100 characters")
     .nonempty("Account holder name is required"),
 
-  iban: z
-    .string()
-    .min(15, "IBAN must be at least 15 characters")
-    .max(34, "IBAN must be at most 34 characters"),
+  // iban: z
+  //   .string()
+  //   .min(15, "IBAN must be at least 15 characters")
+  //   .max(34, "IBAN must be at most 34 characters"),
 
   swiftCode: z
     .string()

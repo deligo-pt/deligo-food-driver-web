@@ -2,11 +2,9 @@ import z from "zod";
 
 export const equipmentValidation = z
   .object({
-    preferredZones: z.array(z.string(), { error: "Preferred zones are required" })
-      .min(1, "At least one preferred zone is required"),
+    preferredZones: z.array(z.string(), "Preferred zones are required"),
 
-    preferredHours: z.array(z.string(), { error: "Preferred hours are required" })
-      .min(1, "At least one preferred hour slot is required"),
+    preferredHours: z.array(z.string(), "Preferred hours are required"),
 
     isothermalBag: z.boolean("Isothermal bag is required"),
 

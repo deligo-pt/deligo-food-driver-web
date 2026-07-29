@@ -36,9 +36,16 @@ type FilePreview = {
   isImage: boolean;
 };
 
-const OPTIONAL_DOCS: DocKey[] = ["activity", "insurancePolicy", "drivingLicenseFront", "drivingLicenseBack", "vehicleRegistration",];
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const OPTIONAL_DOCS: DocKey[] = [
+  "activity",
+  "insurancePolicy",
+  "drivingLicenseFront",
+  "drivingLicenseBack",
+  "vehicleRegistration",
+];
 
-const REQUIRED_DOCS: DocKey[] = [
+const BASE_REQUIRED_DOCS: DocKey[] = [
   "myPhoto",
   "idProofFront",
   "idProofBack",
@@ -113,6 +120,32 @@ export default function Documents({ partner }: { partner: TDeliveryPartner }) {
         prefersImagePreview: true,
       },
     ];
+
+  // Get vehicle type from partner
+  const vehicleType = partner?.vehicleInfo?.vehicleType;
+
+  // Dynamically build required docs based on vehicle type
+  const getRequiredDocs = (): DocKey[] => {
+    const base = [...BASE_REQUIRED_DOCS];
+
+    if (vehicleType === "MOTORBIKE" || vehicleType === "CAR") {
+      return [
+        ...base,
+        "drivingLicenseFront",
+        "drivingLicenseBack",
+        "vehicleRegistration",
+      ];
+    }
+
+    if (vehicleType === "SCOOTER") {
+      return [...base, "vehicleRegistration"];
+    }
+
+    // BICYCLE | E-BIKE | undefined → only base required docs
+    return base;
+  };
+
+  const REQUIRED_DOCS = getRequiredDocs();
 
   const isFormValid = REQUIRED_DOCS.every(
     (key) => previews[key] !== null
