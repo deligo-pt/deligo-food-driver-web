@@ -334,7 +334,7 @@ export function VehicleInfoForm({ onNext, partner }: IProps) {
                                 <div className="flex items-center">
                                   <TruckIcon className="w-5 h-5 text-[#DC3173]" />
                                   <span className="ml-2">
-                                    {t("license_plate")}
+                                    {t("license_plate")}<span className="text-red-600 ml-1">*</span>
                                   </span>
                                 </div>
                               </FormLabel>
