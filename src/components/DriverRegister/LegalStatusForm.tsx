@@ -76,9 +76,9 @@ export function LegalStatusForm({ onNext, partner }: IProps) {
         legalStatus: {
           residencePermitType: values.residencePermitType,
           residencePermitNumber: values.residencePermitNumber,
-          residencePermitExpiry: new Date(
-            values.residencePermitExpiry,
-          ).toISOString(),
+          residencePermitExpiry: values.residencePermitExpiry
+            ? new Date(values.residencePermitExpiry).toISOString()
+            : undefined,
         },
       };
 
@@ -164,7 +164,7 @@ export function LegalStatusForm({ onNext, partner }: IProps) {
                   <FormLabel className="block text-sm font-medium text-gray-700 mb-1">
                     <div className="flex items-center">
                       <BuildingIcon className="w-5 h-5 text-[#DC3173]" />
-                      <span className="ml-2">{t("residence_permit_type")}<span className="text-red-600 ml-1">*</span></span>
+                      <span className="ml-2">{t("residence_permit_type")}</span>
                     </div>
                   </FormLabel>
                   <FormControl>
@@ -206,7 +206,6 @@ export function LegalStatusForm({ onNext, partner }: IProps) {
                       <IdCardIcon className="w-5 h-5 text-[#DC3173]" />
                       <span className="ml-2">
                         {residencePermitType === "Passport" ? t("passport_number") : t("residence_permit_number")}
-                        <span className="text-red-600 ml-1">*</span>
                       </span>
                     </div>
                   </FormLabel>
@@ -234,16 +233,14 @@ export function LegalStatusForm({ onNext, partner }: IProps) {
                     <div className="flex items-center">
                       <CalendarIcon className="w-5 h-5 text-[#DC3173]" />
                       <span className="ml-2">
-                        {residencePermitType === "Passport" ? t("passport_expiry") : t("residence_permit_expiry")}
-                        <span className="text-red-600 ml-1">*</span>
-                      </span>
+                        {residencePermitType === "Passport" ? t("passport_expiry") : t("residence_permit_expiry")}</span>
                     </div>
                   </FormLabel>
                   <FormControl>
                     <DatePicker
                       inputId="residencePermitExpiry"
                       onChange={field.onChange}
-                      value={field.value}
+                      value={field.value || ""}
                       isInvalid={fieldState.invalid}
                       minDate={today}
                     />
