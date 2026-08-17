@@ -43,13 +43,13 @@ const OPTIONAL_DOCS: DocKey[] = [
   "drivingLicenseFront",
   "drivingLicenseBack",
   "vehicleRegistration",
+  "criminalRecordCertificate",
 ];
 
 const BASE_REQUIRED_DOCS: DocKey[] = [
   "myPhoto",
   "idProofFront",
   "idProofBack",
-  "criminalRecordCertificate",
 ];
 
 export default function Documents({ partner }: { partner: TDeliveryPartner }) {
