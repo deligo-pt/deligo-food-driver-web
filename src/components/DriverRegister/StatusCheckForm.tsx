@@ -158,7 +158,7 @@ export function StatusCheckForm() {
             transition={{
                 duration: 0.5,
             }}
-            className="w-full"
+            className="w-full lg:max-w-md lg:mx-auto"
         >
             {step === 0 && (
                 <Form {...form}>
