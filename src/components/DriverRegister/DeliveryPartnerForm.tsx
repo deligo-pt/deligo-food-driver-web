@@ -73,7 +73,7 @@ export function DeliveryPartnerForm() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="w-full lg:max-w-md"
+            className="w-full lg:max-w-md lg:mx-auto"
         >
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)}>
