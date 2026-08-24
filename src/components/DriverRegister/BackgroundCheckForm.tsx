@@ -65,10 +65,22 @@ export function BackgroundCheckForm({ onNext, partner }: IProps) {
       const result = await updatePartnerInformation(partner?.userId as string, payload);
 
       if (result.success) {
-        toast.success("Delivery Partner details updated successfully!", {
+        toast.success(result?.message || "Delivery Partner details updated successfully!", {
           id: toastId,
         });
         onNext();
+      } else {
+        if (result?.errorSources) {
+          result?.errorSources?.map((err: { path: string, message: string }) => (
+            toast.error(err?.message, { id: toastId })
+          ));
+          return;
+        } else {
+          toast.error(result.message || "Background check update failed", {
+            id: toastId,
+          });
+        }
+        console.log(result);
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
