@@ -157,7 +157,7 @@ export default function DeliveryPartnerVerifyOtp({ email }: { email: string }) {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="w-full"
+            className="w-full lg:max-w-md lg:mx-auto"
         >
             <Card className="shadow-xl border border-pink-100 py-0">
                 <CardHeader className="bg-linear-to-r from-[#DC3173]/10 to-[#DC3173]/5 rounded-t-lg py-6">

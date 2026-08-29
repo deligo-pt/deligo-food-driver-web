@@ -135,6 +135,7 @@ export const en = {
     my_photo: "My Photo",
     id_proof_front: "ID Proof Front",
     id_proof_back: "ID Proof Back",
+    iban_proof: "IBAN Proof",
     driving_license_front: "Driving License Front",
     driving_license_back: "Driving License Back",
     vehicle_registration: "Vehicle Registration",

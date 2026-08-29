@@ -135,6 +135,7 @@ export const pt = {
     my_photo: "Minha foto",
     id_proof_front: "Documento de identificação (frente)",
     id_proof_back: "Documento de identificação (verso)",
+    iban_proof: "Comprovativo de IBAN",
     driving_license_front: "Carta de condução (frente)",
     driving_license_back: "Carta de condução (verso)",
     vehicle_registration: "Documento do veículo",
