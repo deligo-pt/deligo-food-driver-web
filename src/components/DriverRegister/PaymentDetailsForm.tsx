@@ -17,22 +17,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
 import {
   ArrowRightIcon,
-  BuildingIcon,
+  CreditCardIcon,
   UserIcon,
 } from "lucide-react";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
-import { cn } from "@/lib/utils";
-import { bankNames } from "@/consts/bankName.const";
 
 interface IProps {
   onNext: () => void;
@@ -46,9 +37,9 @@ export function PaymentDetailsForm({ onNext, partner }: IProps) {
   const form = useForm<FormData>({
     resolver: zodResolver(paymentDetailsValidation),
     defaultValues: {
-      // iban: "",
-      bankName: "",
-      swiftCode: "",
+      iban: "",
+      // bankName: "",
+      // swiftCode: "",
       accountHolderName: "",
     },
   });
@@ -59,9 +50,9 @@ export function PaymentDetailsForm({ onNext, partner }: IProps) {
     try {
       const payload = {
         bankDetails: {
-          // iban: values.iban,
-          bankName: values.bankName,
-          swiftCode: values.swiftCode,
+          iban: values.iban,
+          // bankName: values.bankName,
+          // swiftCode: values.swiftCode,
           accountHolderName: values.accountHolderName,
         },
       };
@@ -69,10 +60,22 @@ export function PaymentDetailsForm({ onNext, partner }: IProps) {
       const result = await updatePartnerInformation(partner?.userId as string, payload);
 
       if (result.success) {
-        toast.success("Delivery Partner details updated successfully!", {
+        toast.success(result?.message || "Delivery Partner details updated successfully!", {
           id: toastId,
         });
         onNext();
+      } else {
+        if (result?.errorSources) {
+          result?.errorSources?.map((err: { path: string, message: string }) => (
+            toast.error(err?.message, { id: toastId })
+          ));
+          return;
+        } else {
+          toast.error(result.message || "Payment details update failed", {
+            id: toastId,
+          });
+        }
+        console.log(result);
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
@@ -91,9 +94,9 @@ export function PaymentDetailsForm({ onNext, partner }: IProps) {
     const getPartnerData = async () => {
       try {
         if (partner?._id) {
-          // form.setValue("iban", partner?.bankDetails?.iban || "");
-          form.setValue("bankName", partner?.bankDetails?.bankName || "");
-          form.setValue("swiftCode", partner?.bankDetails?.swiftCode || "");
+          form.setValue("iban", partner?.bankDetails?.iban || "");
+          // form.setValue("bankName", partner?.bankDetails?.bankName || "");
+          // form.setValue("swiftCode", partner?.bankDetails?.swiftCode || "");
           form.setValue(
             "accountHolderName",
             partner?.bankDetails?.accountHolderName || "",
@@ -131,7 +134,7 @@ export function PaymentDetailsForm({ onNext, partner }: IProps) {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="space-y-6">
-            <FormField
+            {/* <FormField
               control={form.control}
               name="bankName"
               render={({ field, fieldState }) => (
@@ -166,7 +169,7 @@ export function PaymentDetailsForm({ onNext, partner }: IProps) {
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            /> */}
             <FormField
               control={form.control}
               name="accountHolderName"
@@ -189,7 +192,7 @@ export function PaymentDetailsForm({ onNext, partner }: IProps) {
                 </FormItem>
               )}
             />
-            {/* <FormField
+            <FormField
               control={form.control}
               name="iban"
               render={({ field }) => (
@@ -210,8 +213,8 @@ export function PaymentDetailsForm({ onNext, partner }: IProps) {
                   <FormMessage />
                 </FormItem>
               )}
-            /> */}
-            <FormField
+            />
+            {/* <FormField
               control={form.control}
               name="swiftCode"
               render={({ field }) => (
@@ -232,7 +235,7 @@ export function PaymentDetailsForm({ onNext, partner }: IProps) {
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            /> */}
 
             <div className="bg-[#DC3173]/10 p-4 rounded-lg border border-[#DC3173]/20">
               <p className="text-sm text-gray-700 flex items-start">

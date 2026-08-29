@@ -1,4 +1,15 @@
 export const pt = {
+    // error page
+    something_went_wrong: "Algo Deu Errado",
+    looks_like_our_app_ran_into: "Parece que nosso aplicativo encontrou um problema inesperado",
+    we_are_working_hard_to_get_things: "Estamos trabalhando duro para colocar tudo para funcionar novamente!",
+    retry: "Tentar Novamente",
+    back_to_home: "Voltar para o Início",
+
+    // not found
+    page_not_found: "Página Não Encontrada",
+    oops_it_looks_like_your_are_stumbled_upon: "Ops! Parece que você caiu em um beco sem saída 🗺️. A página que você está procurando parece ter sido perdida ou movida para um local diferente.",
+
     // add delivery partner -> delivery partner form
     create_an_account: "Criar uma conta",
     enter_details_start_application: "Introduza os seus dados para iniciar a sua candidatura.",
@@ -124,6 +135,7 @@ export const pt = {
     my_photo: "Minha foto",
     id_proof_front: "Documento de identificação (frente)",
     id_proof_back: "Documento de identificação (verso)",
+    iban_proof: "Comprovativo de IBAN",
     driving_license_front: "Carta de condução (frente)",
     driving_license_back: "Carta de condução (verso)",
     vehicle_registration: "Documento do veículo",
