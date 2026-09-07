@@ -28,7 +28,8 @@ type DocKey =
   | "vehicleRegistration"
   | "criminalRecordCertificate"
   | "activity"
-  | "insurancePolicy";
+  | "insurancePolicy"
+  | "ibanProof";
 
 type FilePreview = {
   file: File | null;
@@ -50,6 +51,7 @@ const BASE_REQUIRED_DOCS: DocKey[] = [
   "myPhoto",
   "idProofFront",
   "idProofBack",
+  "ibanProof"
 ];
 
 export default function Documents({ partner }: { partner: TDeliveryPartner }) {
@@ -65,6 +67,7 @@ export default function Documents({ partner }: { partner: TDeliveryPartner }) {
     criminalRecordCertificate: null,
     activity: null,
     insurancePolicy: null,
+    ibanProof: null,
   });
   const router = useRouter();
   const inputsRef = useRef<Record<string, HTMLInputElement | null>>({});
@@ -87,6 +90,11 @@ export default function Documents({ partner }: { partner: TDeliveryPartner }) {
       {
         key: "idProofBack",
         label: t("id_proof_back"),
+        prefersImagePreview: true
+      },
+      {
+        key: "ibanProof",
+        label: t("iban_proof"),
         prefersImagePreview: true
       },
       {
@@ -211,11 +219,21 @@ export default function Documents({ partner }: { partner: TDeliveryPartner }) {
         if (inputsRef.current[key]) {
           inputsRef.current[key]!.value = "";
         }
+      }
+
+      if (result?.data?.errorSources) {
+        result?.data?.errorSources?.map((err: { path: string, message: string }) => (
+          toast.error(err?.message, { id: toastId })
+        ));
+        return;
       } else {
         toast.error(result?.message || "File upload failed", {
           id: toastId,
         });
       }
+
+      console.log(result);
+      return;
     } catch (error) {
       console.log(error);
       toast.error("Upload failed", { id: toastId });
@@ -258,6 +276,7 @@ export default function Documents({ partner }: { partner: TDeliveryPartner }) {
             criminalRecordCertificate: null,
             activity: null,
             insurancePolicy: null,
+            ibanProof: null,
           };
 
           (Object.keys(docs) as DocKey[]).forEach((key) => {
