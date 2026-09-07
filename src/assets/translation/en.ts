@@ -140,8 +140,8 @@ export const en = {
     driving_license_back: "Driving License Back",
     vehicle_registration: "Vehicle Registration",
     criminal_record_certification: "Criminal Record Certificate",
-    activity: "Activity (optional)",
-    insurance_policy: "Insurance Policy (optional)",
+    activity: "Activity",
+    insurance_policy: "Insurance Policy",
     select_file: "Select file",
     complete_submit: "Complete & Submit",
 

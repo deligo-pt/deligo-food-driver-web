@@ -140,8 +140,8 @@ export const pt = {
     driving_license_back: "Carta de condução (verso)",
     vehicle_registration: "Documento do veículo",
     criminal_record_certification: "Certificado de Registo Criminal",
-    activity: "Atividade (opcional)",
-    insurance_policy: "Apólice de Seguro (opcional)",
+    activity: "Atividade",
+    insurance_policy: "Apólice de Seguro",
     select_file: "Selecionar ficheiro",
     complete_submit: "Concluir e submeter",
 
