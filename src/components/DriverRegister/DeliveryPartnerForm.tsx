@@ -37,6 +37,7 @@ export function DeliveryPartnerForm() {
     const { t } = useTranslation();
     const router = useRouter();
     const [showPassword, setShowPassword] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const form = useForm<FormData>({
         resolver: zodResolver(deliveryPartnerValidation),
@@ -49,6 +50,7 @@ export function DeliveryPartnerForm() {
 
     const onSubmit = async (data: FormData) => {
         const toastId = toast.loading("Creating account...");
+        setIsSubmitting(true);
 
         try {
             const result = await createDeliveryPartner(data);
@@ -56,8 +58,12 @@ export function DeliveryPartnerForm() {
             if (result.success) {
                 toast.success(result.message, { id: toastId });
                 router.push(`/verify-otp?email=${result.data.email}`);
+                setTimeout(() => {
+                    setIsSubmitting(false);
+                }, 2000);
             } else {
                 toast.error(result.message, { id: toastId });
+                setIsSubmitting(false);
                 if (result?.err?.statusCode === 409) {
                     router.push('/status-check')
                 }
@@ -65,8 +71,11 @@ export function DeliveryPartnerForm() {
         } catch (err: any) {
             toast.error("Something went wrong", { id: toastId });
             console.log(err);
+            setIsSubmitting(false);
         }
     };
+
+    const isDisabled = isSubmitting || !form.formState.isValid;
 
     return (
         <motion.div
@@ -157,7 +166,7 @@ export function DeliveryPartnerForm() {
                             <Button
                                 type="submit"
                                 className="w-full h-12 rounded-xl bg-primary text-white font-semibold"
-                                disabled={!form.formState.isValid}
+                                disabled={isDisabled}
                             >
                                 {t("continue")}
                             </Button>
