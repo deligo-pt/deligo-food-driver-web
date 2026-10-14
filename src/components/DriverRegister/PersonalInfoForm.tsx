@@ -92,7 +92,7 @@ export function PersonalInfoForm({ onNext, partner }: IProps) {
 
   // Create an optimized, sorted list outside the component so it doesn't recalculate on every render
   const countryOptions = Object.entries(countries)
-    .map(([code, country]) => ({
+    .map(([_, country]) => ({
       value: country.name,
       label: country.name,
     }))
@@ -123,6 +123,7 @@ export function PersonalInfoForm({ onNext, partner }: IProps) {
           country: values.country,
         },
       };
+
       const result = await updatePartnerInformation(partner?.userId as string, payload);
 
       if (result.success) {
@@ -157,36 +158,23 @@ export function PersonalInfoForm({ onNext, partner }: IProps) {
   };
 
   useEffect(() => {
-    const getPartnerData = async () => {
-      try {
-        if (partner?._id) {
+    if (!partner?._id) return;
 
-          form.setValue("firstName", partner?.name?.firstName || "");
-          form.setValue("lastName", partner?.name?.lastName || "");
-          form.setValue("phoneNumber", partner?.contactNumber || "");
-          form.setValue(
-            "dateOfBirth",
-            (partner?.personalInfo?.dateOfBirth as unknown as string) || "",
-          );
-          form.setValue("nationality", partner?.personalInfo?.nationality || "");
-          form.setValue("gender", partner?.personalInfo?.gender || "MALE");
-          form.setValue("nifNumber", partner?.personalInfo?.NIF || "");
-          form.setValue(
-            "passportNumber",
-            partner?.personalInfo?.passportNumber || "",
-          );
-          form.setValue("street", partner?.address?.street || "");
-          form.setValue("city", partner?.address?.city || "");
-          form.setValue("postalCode", partner?.address?.postalCode || "");
-          form.setValue("state", partner?.address?.state || "");
-          form.setValue("country", partner?.address?.country || "");
-        }
-      } catch (error) {
-        console.log("Error fetching delivery partner data:", error);
-      }
-    };
-
-    getPartnerData();
+    form.reset({
+      firstName: partner?.name?.firstName || "",
+      lastName: partner?.name?.lastName || "",
+      phoneNumber: partner?.contactNumber || "",
+      dateOfBirth: (partner?.personalInfo?.dateOfBirth as unknown as string) || "",
+      nationality: partner?.personalInfo?.nationality || "",
+      gender: partner?.personalInfo?.gender ?? "MALE",
+      nifNumber: partner?.personalInfo?.NIF || "",
+      passportNumber: partner?.personalInfo?.passportNumber || "",
+      street: partner?.address?.street || "",
+      city: partner?.address?.city || "",
+      postalCode: partner?.address?.postalCode || "",
+      state: partner?.address?.state || "",
+      country: partner?.address?.country || "",
+    });
   }, [partner, form]);
 
   const today = new Date();
@@ -355,7 +343,11 @@ export function PersonalInfoForm({ onNext, partner }: IProps) {
                     </div>
                   </FormLabel>
                   <FormControl>
-                    <Select onValueChange={field.onChange} value={field.value}>
+                    <Select
+                      key={field.value}               // forces re-mount when value changes
+                      onValueChange={field.onChange}
+                      value={field.value || undefined}
+                    >
                       <SelectTrigger
                         className={cn(
                           "w-full p-3 border rounded-lg focus:ring-2 focus:ring-[#DC3173] focus:border-[#DC3173] outline-none transition-all",
@@ -369,7 +361,7 @@ export function PersonalInfoForm({ onNext, partner }: IProps) {
                       <SelectContent>
                         <SelectItem value="MALE">{t("male")}</SelectItem>
                         <SelectItem value="FEMALE">{t("female")}</SelectItem>
-                        <SelectItem value="other">{t("other")}</SelectItem>
+                        <SelectItem value="OTHER">{t("other")}</SelectItem>
                       </SelectContent>
                     </Select>
                   </FormControl>
@@ -580,14 +572,14 @@ export function PersonalInfoForm({ onNext, partner }: IProps) {
                       side="bottom"
                       align="start"
                       sideOffset={4}
-                      className="w-[var(--radix-popover-trigger-width)] p-0 z-50 bg-white border border-gray-200 shadow-lg rounded-lg overflow-hidden"
+                      className="w-(--radix-popover-trigger-width) p-0 z-50 bg-white border border-gray-200 shadow-lg rounded-lg overflow-hidden"
                     >
                       <Command className="bg-white">
                         <CommandInput
                           placeholder={`${t("Search country")}...`}
                           className="h-9"
                         />
-                        <CommandList className="max-h-[200px] overflow-y-auto bg-white">
+                        <CommandList className="max-h-50 overflow-y-auto bg-white">
                           <CommandEmpty>
                             {t("No country found.") || "No country found."}
                           </CommandEmpty>

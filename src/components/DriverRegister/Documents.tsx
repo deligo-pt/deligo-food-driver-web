@@ -218,7 +218,9 @@ export default function Documents({ partner }: { partner: TDeliveryPartner }) {
 
         if (inputsRef.current[key]) {
           inputsRef.current[key]!.value = "";
-        }
+        };
+
+        return;
       }
 
       if (result?.data?.errorSources) {
